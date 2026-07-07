@@ -2,7 +2,7 @@
 
 ## Overview
 
-A personal portfolio website where all content is authored as markdown files in the repo. The home page renders three sections (hero, skills, featured projects, contact) by parsing `.md` files at runtime using `react-markdown` and `gray-matter`.
+A personal portfolio website where all content is authored as markdown files in the repo. The home page renders four sections (hero, skills, featured projects, contact) by parsing `.md` files at runtime using `react-markdown` and `gray-matter`.
 
 ## Goals
 
@@ -21,12 +21,9 @@ src/content/
 │   ├── hero.md
 │   ├── skills.md
 │   └── contact.md
-├── projects/
-│   ├── project-a.md
-│   ├── project-b.md
-│   └── _index.md
-└── blog/
-    └── _index.md
+└── projects/
+    ├── project-a.md
+    └── project-b.md
 ```
 
 ### Frontmatter Format
@@ -48,7 +45,7 @@ Markdown body content here...
 ### File Types
 
 - **Singleton sections** (`home/*.md`): One file per section, rendered directly
-- **Collections** (`projects/*.md`, `blog/*.md`): Multiple files, filtered/sorted by frontmatter
+- **Collections** (`projects/*.md`): Multiple files, filtered/sorted by frontmatter
 
 ## Parsing Layer
 
@@ -60,10 +57,11 @@ Markdown body content here...
 
 ### `src/lib/markdown.ts`
 
-Two main exports:
+Three main exports:
 
 1. **`parseFrontmatter(raw: string)`** — splits raw markdown into `{ meta, content }`
 2. **`getSection(path: string)`** — returns parsed section from content map, or null if missing
+3. **`getProjects()`** — returns all parsed project files as an array of `{ meta, content, slug }`
 
 ### Content Loading
 
