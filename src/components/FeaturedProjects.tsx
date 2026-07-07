@@ -1,4 +1,3 @@
-// src/components/FeaturedProjects.tsx
 import { getProjects } from '@/lib/markdown';
 import { ProjectCard } from './ProjectCard';
 
@@ -15,12 +14,12 @@ export function FeaturedProjects() {
           {projects.map((project) => (
             <ProjectCard
               key={project.slug}
-              title={project.meta.title || 'Untitled Project'}
-              tags={project.meta.tags || []}
-              image={project.meta.image}
+              title={String(project.meta.title || 'Untitled Project')}
+              tags={(project.meta.tags as string[]) || []}
+              image={project.meta.image ? String(project.meta.image) : undefined}
               description={project.content}
-              demo={project.meta.demo}
-              repo={project.meta.repo}
+              demo={project.meta.demo ? String(project.meta.demo) : undefined}
+              repo={project.meta.repo ? String(project.meta.repo) : undefined}
             />
           ))}
         </div>

@@ -1,9 +1,6 @@
-// src/components/ContactSection.tsx
 import { getSection } from '@/lib/markdown';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-
-const contactData = getSection('home/contact.md');
 
 interface Social {
   name: string;
@@ -11,15 +8,18 @@ interface Social {
 }
 
 export function ContactSection() {
+  const contactData = getSection('home/contact.md');
   if (!contactData) return null;
 
-  const { title, email, socials } = contactData.meta;
-  const socialLinks: Social[] = socials || [];
+  const title = String(contactData.meta.title || 'Contact');
+  const email = contactData.meta.email ? String(contactData.meta.email) : null;
+  const socials = (contactData.meta.socials as Social[]) || [];
+  const socialLinks: Social[] = socials;
 
   return (
     <section className="py-16 md:py-24 bg-muted/50">
       <div className="max-w-6xl mx-auto px-4">
-        <h2 className="text-3xl font-bold mb-4">{title || 'Contact'}</h2>
+        <h2 className="text-3xl font-bold mb-4">{title}</h2>
         <div className="prose prose-lg dark:prose-invert mb-8">
           <ReactMarkdown remarkPlugins={[remarkGfm]}>
             {contactData.content}

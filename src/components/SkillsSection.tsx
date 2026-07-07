@@ -1,7 +1,4 @@
-// src/components/SkillsSection.tsx
 import { getSection } from '@/lib/markdown';
-
-const skillsData = getSection('home/skills.md');
 
 interface Skill {
   name: string;
@@ -9,9 +6,10 @@ interface Skill {
 }
 
 export function SkillsSection() {
+  const skillsData = getSection('home/skills.md');
   if (!skillsData) return null;
 
-  const skills: Skill[] = skillsData.meta.skills || [];
+  const skills: Skill[] = (skillsData.meta.skills as Skill[]) || [];
 
   return (
     <section className="py-16 md:py-24 bg-muted/50">

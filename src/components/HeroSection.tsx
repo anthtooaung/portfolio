@@ -1,19 +1,20 @@
-// src/components/HeroSection.tsx
 import { getSection } from '@/lib/markdown';
 
-const hero = getSection('home/hero.md');
-
 export function HeroSection() {
+  const hero = getSection('home/hero.md');
   if (!hero) return null;
 
-  const { title, subtitle, cta, ctaLink } = hero.meta;
+  const title = String(hero.meta.title || 'Hello');
+  const subtitle = hero.meta.subtitle ? String(hero.meta.subtitle) : null;
+  const cta = hero.meta.cta ? String(hero.meta.cta) : null;
+  const ctaLink = hero.meta.ctaLink ? String(hero.meta.ctaLink) : null;
 
   return (
     <section className="py-16 md:py-24">
       <div className="max-w-6xl mx-auto px-4">
         <div className="max-w-2xl">
           <h1 className="text-4xl md:text-6xl font-bold mb-4">
-            {title || 'Hello'}
+            {title}
           </h1>
           {subtitle && (
             <p className="text-xl md:text-2xl text-muted-foreground mb-8">
