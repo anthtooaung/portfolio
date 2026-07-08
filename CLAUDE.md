@@ -56,11 +56,12 @@ Do not make assumptions or skip this prompt.
 
 ### On Session End (Goodbye)
 
-When the user signals they are finishing the session — any phrase like "ok thank you today", "bye bye", "see you", "goodbye", "that's all for today", "I'm done", or similar — **before responding with a farewell**, automatically:
+When the user signals they are finishing the session — any phrase like "ok thank you today", "bye bye", "see you", "goodbye", "that's all for today", "I'm done", or when the user types `/exit` — **before responding with a farewell**, automatically:
 
-1. Run `git diff` (and `git diff --cached`) to gather all changes made during the session.
-2. Create a markdown file in `knowledge/` named with today's date: `knowledge/YYYY-MM-DD.md`.
-3. Write the file with this structure:
+1. Run `/clear` to clear the conversation context.
+2. Run `git diff` (and `git diff --cached`) to gather all changes made during the session.
+3. Create a markdown file in `knowledge/` named with today's date: `knowledge/YYYY-MM-DD.md`.
+4. Write the file with this structure:
 
 ```markdown
 # Daily Progress — YYYY-MM-DD
@@ -78,7 +79,7 @@ When the user signals they are finishing the session — any phrase like "ok tha
 <more detailed breakdown if the session involved multiple tasks>
 ```
 
-4. Confirm the file was written before saying goodbye.
+5. Confirm the file was written before saying goodbye.
 
 Do not skip this step. Even a session with no code changes should produce a file noting that (e.g., "No code changes — planning/discussion only").
 
