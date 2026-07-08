@@ -118,6 +118,51 @@
     --sidebar-ring: oklch(0.556 0 0);
 }
 
+/* Cursor blink animation */
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Stagger entrance animations */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@layer utilities {
+  .animate-cursor-blink {
+    animation: cursor-blink 1s step-end infinite;
+  }
+  .animate-fade-up {
+    animation: fade-up 0.5s ease-out forwards;
+    opacity: 0;
+  }
+  .animation-delay-100 { animation-delay: 100ms; }
+  .animation-delay-200 { animation-delay: 200ms; }
+  .animation-delay-300 { animation-delay: 300ms; }
+  .animation-delay-400 { animation-delay: 400ms; }
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .animate-cursor-blink,
+  .animate-fade-up,
+  .animate-pulse,
+  .animate-bounce {
+    animation: none !important;
+  }
+  .animate-fade-up {
+    opacity: 1 !important;
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

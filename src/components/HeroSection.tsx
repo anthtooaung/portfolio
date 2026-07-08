@@ -18,24 +18,25 @@ export function HeroSection() {
 
       <div className="relative max-w-6xl mx-auto px-4 w-full">
         <div className="max-w-2xl">
-          {/* Terminal-style label */}
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md border border-border bg-muted/50 text-xs text-muted-foreground mb-6">
-            <span className="size-1.5 rounded-full bg-green-500 animate-pulse" />
+          {/* Terminal-style status pill */}
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md border border-border bg-muted/50 text-xs text-muted-foreground mb-6 animate-fade-up">
+            <span className="size-1.5 rounded-full bg-amber-500 animate-pulse" />
             available for work
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-4 leading-[1.1]">
+          {/* Title with blinking cursor */}
+          <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-4 leading-[1.1] animate-fade-up animation-delay-100">
             {title}
-            <span className="text-muted-foreground">.</span>
+            <span className="text-amber-500 animate-cursor-blink">_</span>
           </h1>
 
           {subtitle && (
-            <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-lg leading-relaxed">
+            <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-lg leading-relaxed animate-fade-up animation-delay-200">
               {subtitle}
             </p>
           )}
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 animate-fade-up animation-delay-300">
             {cta && ctaLink && (
               <Button asChild size="lg">
                 <a href={ctaLink}>{cta}</a>
@@ -48,7 +49,7 @@ export function HeroSection() {
         </div>
 
         {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2 text-muted-foreground animate-bounce">
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2 text-muted-foreground animate-bounce animate-fade-up animation-delay-400">
           <ArrowDown weight="bold" className="size-4" />
         </div>
       </div>
