@@ -11,11 +11,20 @@ export interface ProjectFile extends MarkdownFile {
   slug: string;
 }
 
-// Vite loads all .md files as raw strings at build time
-const modules = import.meta.glob('../content/**/*.md', {
-  as: 'raw',
-  eager: true,
-});
+// Individual raw imports (Vite 8 / rolldown doesn't support import.meta.glob with .md)
+import heroRaw from '../content/home/hero.md?raw';
+import skillsRaw from '../content/home/skills.md?raw';
+import contactRaw from '../content/home/contact.md?raw';
+import portfolioRaw from '../content/projects/portfolio.md?raw';
+import dashboardRaw from '../content/projects/dashboard.md?raw';
+
+const modules: Record<string, string> = {
+  './content/home/hero.md': heroRaw,
+  './content/home/skills.md': skillsRaw,
+  './content/home/contact.md': contactRaw,
+  './content/projects/portfolio.md': portfolioRaw,
+  './content/projects/dashboard.md': dashboardRaw,
+};
 
 /**
  * Minimal frontmatter parser — browser-safe, no Node.js dependencies.
@@ -84,7 +93,6 @@ export function parseFrontmatter(raw: string): MarkdownFile {
  * Returns null if the file doesn't exist.
  */
 export function getSection(path: string): MarkdownFile | null {
-  // The glob keys are relative to this file, prefixed with ./content/
   const key = `./content/${path}`;
   const raw = modules[key];
   if (!raw) return null;
