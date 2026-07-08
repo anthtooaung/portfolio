@@ -8,13 +8,13 @@ export function FeaturedProjects() {
   if (projects.length === 0) return null;
 
   return (
-    <section className="py-16 md:py-24" id="projects">
+    <section className="py-20 md:py-28" id="projects">
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex items-center gap-2 mb-2">
-          <Folder weight="bold" className="size-5 text-muted-foreground" />
+          <Folder weight="bold" className="size-5 text-primary" />
           <h2 className="text-3xl font-bold tracking-tight">Featured Projects</h2>
         </div>
-        <p className="text-muted-foreground mb-8 max-w-lg">
+        <p className="text-muted-foreground mb-10 max-w-lg">
           A selection of projects I've built or contributed to.
         </p>
 

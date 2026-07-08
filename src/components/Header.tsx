@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { House, Folder, GearSix, PaperPlaneRight, Sun, Moon, List, X } from '@phosphor-icons/react';
+import { House, User, Folder, GearSix, PaperPlaneRight, Sun, Moon, List, X } from '@phosphor-icons/react';
 
 const NAV_LINKS = [
   { label: 'Home', href: '#home', icon: House },
+  { label: 'About', href: '#about', icon: User },
   { label: 'Projects', href: '#projects', icon: Folder },
   { label: 'Skills', href: '#skills', icon: GearSix },
   { label: 'Contact', href: '#contact', icon: PaperPlaneRight },
@@ -68,7 +69,7 @@ export function Header() {
               key={href}
               href={href}
               onClick={(e) => { e.preventDefault(); handleNavClick(href); }}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-muted-foreground hover:text-primary hover:bg-primary/5 rounded-lg transition-colors duration-300"
             >
               <Icon weight="bold" className="size-3.5" />
               {label}
@@ -112,7 +113,7 @@ export function Header() {
                 key={href}
                 href={href}
                 onClick={(e) => { e.preventDefault(); handleNavClick(href); }}
-                className="flex items-center gap-2 px-3 py-2 text-xs text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors"
+                className="flex items-center gap-2 px-3 py-2 text-xs text-muted-foreground hover:text-primary hover:bg-primary/5 rounded-lg transition-colors duration-300"
               >
                 <Icon weight="bold" className="size-3.5" />
                 {label}

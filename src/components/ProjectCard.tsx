@@ -20,7 +20,7 @@ export function ProjectCard({
   repo,
 }: ProjectCardProps) {
   return (
-    <div className="group rounded-lg border bg-card text-card-foreground overflow-hidden transition-all hover:shadow-lg hover:border-border/80">
+    <div className="group rounded-xl border bg-card text-card-foreground overflow-hidden transition-all duration-300 hover:shadow-lg hover:border-primary/20">
       {/* Image area */}
       {image ? (
         <div className="aspect-video overflow-hidden bg-muted">
@@ -31,13 +31,13 @@ export function ProjectCard({
           />
         </div>
       ) : (
-        <div className="aspect-video bg-gradient-to-br from-muted to-muted/50 flex items-center justify-center">
-          <span className="text-4xl font-bold text-muted-foreground/20">{title.charAt(0)}</span>
+        <div className="aspect-video bg-gradient-to-br from-primary/5 via-muted to-primary/10 flex items-center justify-center">
+          <span className="text-4xl font-bold text-primary/15">{title.charAt(0)}</span>
         </div>
       )}
 
       <div className="p-5">
-        <h3 className="text-base font-semibold mb-2 group-hover:text-primary transition-colors">
+        <h3 className="text-base font-semibold mb-2 group-hover:text-primary transition-colors duration-300">
           {title}
         </h3>
 
@@ -46,7 +46,7 @@ export function ProjectCard({
           {tags.map((tag) => (
             <span
               key={tag}
-              className="px-2 py-0.5 text-[10px] font-medium rounded border border-border bg-muted/50 text-muted-foreground"
+              className="px-2 py-0.5 text-[10px] font-medium rounded-full bg-primary/10 text-primary"
             >
               {tag}
             </span>
@@ -61,7 +61,7 @@ export function ProjectCard({
         </div>
 
         {/* Links */}
-        <div className="flex items-center gap-3 pt-2 border-t border-border">
+        <div className="flex items-center gap-3 pt-3 border-t border-border">
           {demo && (
             <a
               href={demo}

@@ -14,24 +14,24 @@ export function HeroSection() {
   return (
     <section id="home" className="relative min-h-[85vh] flex items-center overflow-hidden">
       {/* Subtle grid background */}
-      <div className="absolute inset-0 bg-[linear-gradient(var(--border)_1px,transparent_1px),linear-gradient(90deg,var(--border)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_110%)] opacity-40" />
+      <div className="absolute inset-0 bg-[linear-gradient(var(--border)_1px,transparent_1px),linear-gradient(90deg,var(--border)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_110%)] opacity-30" />
 
-      <div className="relative max-w-6xl mx-auto px-4 w-full">
+      <div className="relative max-w-6xl mx-auto px-4 w-full py-24">
         <div className="max-w-2xl">
           {/* Terminal-style status pill */}
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md border border-border bg-muted/50 text-xs text-muted-foreground mb-6 animate-fade-up">
-            <span className="size-1.5 rounded-full bg-amber-500 animate-pulse" />
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-xs text-primary font-medium mb-8 animate-fade-up">
+            <span className="size-1.5 rounded-full bg-primary animate-pulse" />
             available for work
           </div>
 
-          {/* Title with blinking cursor */}
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-4 leading-[1.1] animate-fade-up animation-delay-100">
-            {title}
-            <span className="text-amber-500 animate-cursor-blink">_</span>
+          {/* Title with gradient + blinking cursor */}
+          <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 leading-[1.05] animate-fade-up animation-delay-100">
+            <span className="text-gradient-violet">{title}</span>
+            <span className="text-primary animate-cursor-blink font-mono">_</span>
           </h1>
 
           {subtitle && (
-            <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-lg leading-relaxed animate-fade-up animation-delay-200">
+            <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-lg leading-relaxed animate-fade-up animation-delay-200">
               {subtitle}
             </p>
           )}
