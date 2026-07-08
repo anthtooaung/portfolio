@@ -13,6 +13,7 @@ export interface ProjectFile extends MarkdownFile {
 
 // Individual raw imports (Vite 8 / rolldown doesn't support import.meta.glob with .md)
 import heroRaw from '../content/home/hero.md?raw';
+import aboutRaw from '../content/home/about.md?raw';
 import skillsRaw from '../content/home/skills.md?raw';
 import contactRaw from '../content/home/contact.md?raw';
 import portfolioRaw from '../content/projects/portfolio.md?raw';
@@ -20,6 +21,7 @@ import dashboardRaw from '../content/projects/dashboard.md?raw';
 
 const modules: Record<string, string> = {
   './content/home/hero.md': heroRaw,
+  './content/home/about.md': aboutRaw,
   './content/home/skills.md': skillsRaw,
   './content/home/contact.md': contactRaw,
   './content/projects/portfolio.md': portfolioRaw,
