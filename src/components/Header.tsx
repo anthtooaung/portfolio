@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { House, Folder, GearSix, PaperPlaneRight, Sun, Moon, List, X } from '@phosphor-icons/react';
+import { House, User, Folder, GearSix, PaperPlaneRight, Sun, Moon, List, X } from '@phosphor-icons/react';
 
 const NAV_LINKS = [
   { label: 'Home', href: '#home', icon: House },
+  { label: 'About', href: '#about', icon: User },
   { label: 'Projects', href: '#projects', icon: Folder },
   { label: 'Skills', href: '#skills', icon: GearSix },
   { label: 'Contact', href: '#contact', icon: PaperPlaneRight },
