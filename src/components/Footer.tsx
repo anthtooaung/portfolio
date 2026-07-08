@@ -20,7 +20,7 @@ export function Footer() {
               href={url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              className="text-muted-foreground hover:text-primary transition-colors duration-300"
               aria-label={name}
             >
               <Icon weight="bold" className="size-4" />

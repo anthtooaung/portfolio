@@ -18,16 +18,17 @@ export function ContactSection() {
   const contactData = getSection('home/contact.md');
   if (!contactData) return null;
 
+  const title = contactData.meta.title ? String(contactData.meta.title) : "Let's work together";
   const email = contactData.meta.email ? String(contactData.meta.email) : null;
   const socials = (contactData.meta.socials as Social[]) || [];
 
   return (
-    <section id="contact" className="py-16 md:py-24 bg-muted/30">
+    <section id="contact" className="py-20 md:py-28 bg-muted/30">
       <div className="max-w-6xl mx-auto px-4">
         <div className="max-w-xl">
           {/* Inviting heading */}
           <h2 className="text-3xl font-bold tracking-tight mb-2 animate-fade-up">
-            Let's work together
+            {title}
           </h2>
 
           <div className="prose prose-lg dark:prose-invert mb-8 text-muted-foreground animate-fade-up animation-delay-100">
@@ -41,10 +42,10 @@ export function ContactSection() {
             <div className="animate-fade-up animation-delay-200">
               <a
                 href={`mailto:${email}`}
-                className="group flex items-center gap-3 px-4 py-3 rounded-lg border border-border bg-card hover:bg-muted transition-colors"
+                className="group flex items-center gap-3 px-4 py-3 rounded-xl border border-border bg-card hover:border-primary/20 hover:bg-muted transition-all duration-300"
               >
-                <span className="text-amber-500 font-bold">{'>'}</span>
-                <span className="text-foreground group-hover:text-amber-500 transition-colors">
+                <span className="text-primary font-bold font-mono">{'>'}</span>
+                <span className="text-foreground group-hover:text-primary transition-colors">
                   {email}
                 </span>
               </a>
@@ -62,7 +63,7 @@ export function ContactSection() {
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs text-muted-foreground border border-border rounded-md hover:border-amber-500/50 hover:text-foreground transition-colors"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs text-muted-foreground border border-border rounded-full hover:border-primary/40 hover:text-primary hover:bg-primary/5 transition-all duration-300"
                   >
                     {Icon && <Icon weight="bold" className="size-3" />}
                     {social.name}
