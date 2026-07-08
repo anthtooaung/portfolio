@@ -30,10 +30,24 @@ const modules: Record<string, string> = {
  * Minimal frontmatter parser — browser-safe, no Node.js dependencies.
  * Expects YAML between --- delimiters at the top of the file.
  */
+function parseYamlValue(value: string): unknown {
+  if (value === '' || value === '[]') return [];
+  if (value.startsWith('[') && value.endsWith(']')) {
+    return value.slice(1, -1).split(',').map(s => s.trim());
+  }
+  if (value.startsWith('"') && value.endsWith('"')) return value.slice(1, -1);
+  if (value === 'true') return true;
+  if (value === 'false') return false;
+  if (!isNaN(Number(value))) return Number(value);
+  return value;
+}
+
 function parseYamlSimple(yaml: string): Record<string, unknown> {
   const result: Record<string, unknown> = {};
   let currentKey = '';
   let isArray = false;
+  let arrayItemIndent = -1;
+  let currentObject: Record<string, unknown> | null = null;
 
   for (const line of yaml.split('\n')) {
     const trimmed = line.trim();
@@ -41,27 +55,53 @@ function parseYamlSimple(yaml: string): Record<string, unknown> {
 
     // Array item (continuation of previous key)
     if (isArray && /^-\s/.test(trimmed)) {
-      const val = trimmed.replace(/^-\s+/, '');
-      const arr = result[currentKey] as string[];
-      arr.push(val);
+      const indent = line.length - line.trimStart().length;
+
+      // If the item has inline content like `- name: "React"`, parse as object
+      const afterDash = trimmed.slice(2);
+      const colonIdx = afterDash.indexOf(':');
+      if (colonIdx !== -1) {
+        const objKey = afterDash.slice(0, colonIdx).trim();
+        const objValue = afterDash.slice(colonIdx + 1).trim();
+        currentObject = { [objKey]: parseYamlValue(objValue) };
+        arrayItemIndent = indent;
+        (result[currentKey] as unknown[]).push(currentObject);
+      } else {
+        // Simple array item like `- item1`
+        currentObject = null;
+        arrayItemIndent = -1;
+        (result[currentKey] as unknown[]).push(parseYamlValue(afterDash));
+      }
       continue;
     }
 
-    const colonIdx = trimmed.indexOf(':');
-    if (colonIdx === -1) continue;
+    // Indented property under current array object (e.g., `  level: 90` under `- name: "React"`)
+    if (currentObject && isArray && arrayItemIndent >= 0) {
+      const indent = line.length - line.trimStart().length;
+      const propColon = trimmed.indexOf(':');
+      if (indent > arrayItemIndent && propColon !== -1) {
+        const propKey = trimmed.slice(0, propColon).trim();
+        const propValue = trimmed.slice(propColon + 1).trim();
+        currentObject[propKey] = parseYamlValue(propValue);
+        continue;
+      }
+    }
 
-    const key = trimmed.slice(0, colonIdx).trim();
-    const value = trimmed.slice(colonIdx + 1).trim();
+    const colon = trimmed.indexOf(':');
+    if (colon === -1) continue;
+
+    const key = trimmed.slice(0, colon).trim();
+    const value = trimmed.slice(colon + 1).trim();
 
     currentKey = key;
     isArray = false;
+    currentObject = null;
+    arrayItemIndent = -1;
 
     if (value === '' || value === '[]') {
-      // Could be a multi-line array or empty
       result[key] = [];
       isArray = true;
     } else if (value.startsWith('[') && value.endsWith(']')) {
-      // Inline array: [a, b, c]
       result[key] = value.slice(1, -1).split(',').map(s => s.trim());
     } else if (value.startsWith('"') && value.endsWith('"')) {
       result[key] = value.slice(1, -1);
