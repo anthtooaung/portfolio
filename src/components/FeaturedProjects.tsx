@@ -1,5 +1,6 @@
 import { getProjects } from '@/lib/markdown';
 import { ProjectCard } from './ProjectCard';
+import { Folder } from '@phosphor-icons/react';
 
 export function FeaturedProjects() {
   const projects = getProjects().filter((p) => p.meta.featured);
@@ -9,8 +10,15 @@ export function FeaturedProjects() {
   return (
     <section className="py-16 md:py-24" id="projects">
       <div className="max-w-6xl mx-auto px-4">
-        <h2 className="text-3xl font-bold mb-8">Featured Projects</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="flex items-center gap-2 mb-2">
+          <Folder weight="bold" className="size-5 text-muted-foreground" />
+          <h2 className="text-3xl font-bold tracking-tight">Featured Projects</h2>
+        </div>
+        <p className="text-muted-foreground mb-8 max-w-lg">
+          A selection of projects I've built or contributed to.
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {projects.map((project) => (
             <ProjectCard
               key={project.slug}

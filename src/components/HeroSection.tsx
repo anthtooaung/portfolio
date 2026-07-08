@@ -1,4 +1,6 @@
 import { getSection } from '@/lib/markdown';
+import { ArrowDown } from '@phosphor-icons/react';
+import { Button } from '@/components/ui/button';
 
 export function HeroSection() {
   const hero = getSection('home/hero.md');
@@ -10,25 +12,44 @@ export function HeroSection() {
   const ctaLink = hero.meta.ctaLink ? String(hero.meta.ctaLink) : null;
 
   return (
-    <section className="py-16 md:py-24">
-      <div className="max-w-6xl mx-auto px-4">
+    <section id="home" className="relative min-h-[85vh] flex items-center overflow-hidden">
+      {/* Subtle grid background */}
+      <div className="absolute inset-0 bg-[linear-gradient(var(--border)_1px,transparent_1px),linear-gradient(90deg,var(--border)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_110%)] opacity-40" />
+
+      <div className="relative max-w-6xl mx-auto px-4 w-full">
         <div className="max-w-2xl">
-          <h1 className="text-4xl md:text-6xl font-bold mb-4">
+          {/* Terminal-style label */}
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md border border-border bg-muted/50 text-xs text-muted-foreground mb-6">
+            <span className="size-1.5 rounded-full bg-green-500 animate-pulse" />
+            available for work
+          </div>
+
+          <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-4 leading-[1.1]">
             {title}
+            <span className="text-muted-foreground">.</span>
           </h1>
+
           {subtitle && (
-            <p className="text-xl md:text-2xl text-muted-foreground mb-8">
+            <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-lg leading-relaxed">
               {subtitle}
             </p>
           )}
-          {cta && ctaLink && (
-            <a
-              href={ctaLink}
-              className="inline-flex items-center justify-center px-6 py-3 text-sm font-medium bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
-            >
-              {cta}
-            </a>
-          )}
+
+          <div className="flex items-center gap-3">
+            {cta && ctaLink && (
+              <Button asChild size="lg">
+                <a href={ctaLink}>{cta}</a>
+              </Button>
+            )}
+            <Button variant="outline" size="lg" asChild>
+              <a href="#contact">Get in Touch</a>
+            </Button>
+          </div>
+        </div>
+
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2 text-muted-foreground animate-bounce">
+          <ArrowDown weight="bold" className="size-4" />
         </div>
       </div>
     </section>
