@@ -12,7 +12,7 @@ export function HeroSection() {
   const ctaLink = hero.meta.ctaLink ? String(hero.meta.ctaLink) : null;
 
   return (
-    <section id="home" className="relative min-h-[85vh] flex items-center overflow-hidden">
+    <section id="home" className="relative min-h-[85vh] flex items-center overflow-hidden scroll-mt-14">
       {/* Subtle grid background */}
       <div className="absolute inset-0 bg-[linear-gradient(var(--border)_1px,transparent_1px),linear-gradient(90deg,var(--border)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_110%)] opacity-30" />
 
