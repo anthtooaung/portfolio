@@ -1,12 +1,12 @@
-import { Certificate, Medal, GraduationCap, Star, Shield, BookOpen } from '@phosphor-icons/react';
+import { Certificate } from '@phosphor-icons/react';
 
 const CERTS = [
-  { name: 'Certificate 1', slug: 'certificate-bwsddiaa3s3c', file: 'certificate-bwsddiaa3s3c-1785140297.pdf', Icon: Certificate },
-  { name: 'Certificate 2', slug: 'certificate-gu2huv8wu79r', file: 'certificate-gu2huv8wu79r-1785045235.pdf', Icon: Medal },
-  { name: 'Certificate 3', slug: 'certificate-kss3uqvjvr7h', file: 'certificate-kss3uqvjvr7h-1781894910.pdf', Icon: GraduationCap },
-  { name: 'Certificate 4', slug: 'certificate-m4aup67k7vr7', file: 'certificate-m4aup67k7vr7-1785048504.pdf', Icon: Star },
-  { name: 'Certificate 5', slug: 'certificate-txdjx8tkhpfb', file: 'certificate-txdjx8tkhpfb-1784876279.pdf', Icon: Shield },
-  { name: 'Certificate 6', slug: 'certificate-x7qxsdfhic9h', file: 'certificate-x7qxsdfhic9h-1785144854.pdf', Icon: BookOpen },
+  { name: 'Certificate 1', file: 'certificate-bwsddiaa3s3c-1785140297.pdf' },
+  { name: 'Certificate 2', file: 'certificate-gu2huv8wu79r-1785045235.pdf' },
+  { name: 'Certificate 3', file: 'certificate-kss3uqvjvr7h-1781894910.pdf' },
+  { name: 'Certificate 4', file: 'certificate-m4aup67k7vr7-1785048504.pdf' },
+  { name: 'Certificate 5', file: 'certificate-txdjx8tkhpfb-1784876279.pdf' },
+  { name: 'Certificate 6', file: 'certificate-x7qxsdfhic9h-1785144854.pdf' },
 ];
 
 const AMBER = '#f59e0b';
@@ -24,9 +24,9 @@ export function CertificatesSection() {
         </p>
 
         <div className="flex flex-wrap items-center gap-4">
-          {CERTS.map(({ name, file, slug, Icon }) => (
+          {CERTS.map(({ name, file }) => (
             <a
-              key={slug}
+              key={file}
               href={`/certificates/${file}`}
               target="_blank"
               rel="noopener noreferrer"
@@ -34,10 +34,7 @@ export function CertificatesSection() {
               className="group cert-ico-link"
               style={{ color: AMBER }}
             >
-              <Icon
-                weight="fill"
-                className="cert-ico"
-              />
+              <Certificate weight="fill" className="cert-ico" />
             </a>
           ))}
         </div>
