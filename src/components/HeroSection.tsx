@@ -17,7 +17,8 @@ export function HeroSection() {
       <div className="absolute inset-0 bg-[linear-gradient(var(--border)_1px,transparent_1px),linear-gradient(90deg,var(--border)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_110%)] opacity-30" />
 
       <div className="relative max-w-6xl mx-auto px-4 w-full py-24">
-        <div className="max-w-2xl">
+        <div className="flex flex-col md:flex-row items-center md:items-start gap-10">
+          <div className="max-w-2xl flex-1">
           {/* Terminal-style status pill */}
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-xs text-primary font-medium mb-8 animate-fade-up">
             <span className="size-1.5 rounded-full bg-primary animate-pulse" />
@@ -45,6 +46,16 @@ export function HeroSection() {
             <Button variant="outline" size="lg" asChild>
               <a href="#contact">Get in Touch</a>
             </Button>
+          </div>
+          </div>
+
+          {/* Profile photo */}
+          <div className="shrink-0 animate-fade-up animation-delay-200">
+            <img
+              src="/profile.jpg"
+              alt="Ant Htoo Aung"
+              className="w-40 h-40 md:w-56 md:h-56 rounded-full object-cover ring-4 ring-primary/20 shadow-lg"
+            />
           </div>
         </div>
 
