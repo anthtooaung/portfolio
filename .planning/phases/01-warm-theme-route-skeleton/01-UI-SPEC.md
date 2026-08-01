@@ -201,7 +201,7 @@ Phase 1 is a theme/routing skeleton phase. Most UI text already exists in the cu
 | Resume nav link label | "Resume" | CONTEXT.md D-07 (locked) |
 | Resume nav link icon | `FileText` from Phosphor Icons | Already imported in Header.tsx |
 | Resume page placeholder | Empty `div` with heading "Resume" (placeholder for Phase 2) | Default; Phase 2 builds content |
-| Primary CTA | "Let's Talk" (hero section) | Existing; unchanged by this phase |
+| Primary CTA | "View My Work" (hero section) | Existing `src/content/home/hero.md` cta field; unchanged by this phase |
 | Empty state | N/A (no new empty states in this phase) | -- |
 | Error state | N/A (no new error states in this phase) | -- |
 | Destructive actions | None in this phase | -- |
@@ -210,17 +210,21 @@ Phase 1 is a theme/routing skeleton phase. Most UI text already exists in the cu
 
 ## UI Considerations
 
-> Shape-rooted UI state coverage for Phase 1 elements. This phase modifies token values and adds routing skeleton -- it does not introduce new interactive components or data-driven elements. State considerations are minimal.
+> Shape-rooted UI state coverage for Phase 1 elements. This phase modifies CSS token values and adds a routing skeleton. It does not introduce new interactive components or data-driven elements. State considerations are minimal — resolved via probe.
 
-Applicable state considerations resolved: 4 covered, 1 backstop, 0 unresolved
+**Probe result:** 21 candidates classified; 2 elements state-bearing (E2 gradient, E6 dark-mode toggle), 4 structural N/A (E1 tokens, E3 nav link, E4 DefaultLayout, E5 ScrollToTop). All 21 items resolved.
 
-| Category | Element(s) | Status | Resolution / Reason |
-|----------|------------|--------|---------------------|
-| populated | Token values (`:root`, `.dark`) | covered | All tokens declared in Color section above; both light and dark modes fully specified |
-| loading | Resume page (`/resume`) | covered | Phase 1 renders minimal placeholder; no loading state needed until Phase 2 adds data |
-| error | Dark mode toggle | covered | Existing pattern: `useState` + localStorage + `classList.toggle('dark')` -- no new error surface introduced |
-| overflow | Nav items with Resume link | backstop | Resume link is a single nav item; should not cause overflow. If it does, truncation via `overflow-hidden` on nav container is the fallback. Verification: visual inspection at mobile breakpoints. |
-| long-text | Nav link labels | covered | Labels are short strings ("Home", "About", ..., "Resume") -- no long-text concern |
+| Category | Element | Status | Resolution |
+|----------|---------|--------|------------|
+| overflow | Hero title gradient (E2) | covered | Title wraps at narrow viewports; gradient applies per-line via `background-clip: text`, so wrapped text shows gradient correctly on each line. No special overflow handling needed. |
+| long-text | Hero title gradient (E2) | covered | Gradient is a background effect, not content-dependent. Long or short title text receives the same treatment. |
+| long-text | Dark mode toggle (E6) | covered | Toggle label is a Phosphor icon (Sun/Moon) — no text length concern. |
+| populated | Token values (E1, all categories) | dismissed | Tokens are CSS declarations, not data-driven states — no empty/loading/error/partial/overflow/zero-one-many surface applies. |
+| populated | Nav link Resume (E3, all categories) | dismissed | Static nav link — not a data-driven element; no state surface. |
+| populated | DefaultLayout wrapper (E4) | dismissed | Layout container — no data or interactive state. |
+| populated | ScrollToTop (E5) | dismissed | Utility component — fires on mount, no visual state. |
+| empty | Nav link / Toggle / Layout | dismissed | None of these elements have an "empty" state — they are always present when mounted. |
+| error | Token palette / Gradient / Nav | dismissed | CSS rendering is deterministic — no error surface exists for these elements. |
 
 ---
 
@@ -237,11 +241,11 @@ Applicable state considerations resolved: 4 covered, 1 backstop, 0 unresolved
 
 ## Checker Sign-Off
 
-- [ ] Dimension 1 Copywriting: PASS
-- [ ] Dimension 2 Visuals: PASS
-- [ ] Dimension 3 Color: PASS
-- [ ] Dimension 4 Typography: PASS
-- [ ] Dimension 5 Spacing: PASS
-- [ ] Dimension 6 Registry Safety: PASS
+- [x] Dimension 1 Copywriting: PASS
+- [x] Dimension 2 Visuals: PASS (FLAG: hero title recommended as primary focal point — non-blocking, executor may treat as implicit)
+- [x] Dimension 3 Color: PASS
+- [x] Dimension 4 Typography: PASS
+- [x] Dimension 5 Spacing: PASS
+- [x] Dimension 6 Registry Safety: PASS
 
-**Approval:** pending
+**Approval:** APPROVED (6/6 dimensions passed; 1 non-blocking recommendation on focal point declaration)
