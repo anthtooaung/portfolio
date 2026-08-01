@@ -1,8 +1,8 @@
 // src/pages/Home.tsx
 import { HeroSection } from '@/components/HeroSection';
 import { AboutSection } from '@/components/AboutSection';
-import { SkillsSection } from '@/components/SkillsSection';
 import { FeaturedProjects } from '@/components/FeaturedProjects';
+import { SkillsSection } from '@/components/SkillsSection';
 import { ContactSection } from '@/components/ContactSection';
 
 export function Home() {
@@ -10,8 +10,8 @@ export function Home() {
     <main>
       <HeroSection />
       <AboutSection />
-      <SkillsSection />
       <FeaturedProjects />
+      <SkillsSection />
       <ContactSection />
     </main>
   );
