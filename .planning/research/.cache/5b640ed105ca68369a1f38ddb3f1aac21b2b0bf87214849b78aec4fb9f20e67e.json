@@ -1,0 +1,1 @@
+{"content":"Contact form for portfolios: react-hook-form + Zod validation already in use. Add honeypot field for anti-spam. Clear success/error states. Minimal fields (name, email, message). Loading spinner on submit. EmailJS already configured.","source":"web","provider":"websearch","confidence":"MEDIUM","fetched_at":"2026-08-01T08:31:15.687Z","ttl":86400000,"kind":"web"}
