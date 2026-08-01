@@ -8,7 +8,7 @@ export function FeaturedProjects() {
   if (projects.length === 0) return null;
 
   return (
-    <section className="py-20 md:py-28" id="projects">
+    <section className="py-20 md:py-28 scroll-mt-14" id="projects">
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex items-center gap-2 mb-2">
           <Folder weight="bold" className="size-5 text-primary" />

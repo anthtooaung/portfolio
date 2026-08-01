@@ -18,7 +18,7 @@ export function AboutSection() {
   const cards: AboutCard[] = (aboutData.meta.cards as AboutCard[]) || [];
 
   return (
-    <section id="about" className="py-20 md:py-28">
+    <section id="about" className="py-20 md:py-28 scroll-mt-14">
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex items-center gap-2 mb-2">
           <User weight="bold" className="size-5 text-primary" />

@@ -80,7 +80,7 @@ export function ContactSection() {
   };
 
   return (
-    <section id="contact" className="py-20 md:py-28 bg-muted/30">
+    <section id="contact" className="py-20 md:py-28 bg-muted/30 scroll-mt-14">
       <div className="max-w-6xl mx-auto px-4">
         {/* Section header */}
         <div className="max-w-xl mb-12">

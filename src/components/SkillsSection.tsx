@@ -13,7 +13,7 @@ export function SkillsSection() {
   const skills: Skill[] = (skillsData.meta.skills as Skill[]) || [];
 
   return (
-    <section id="skills" className="py-20 md:py-28 bg-muted/30">
+    <section id="skills" className="py-20 md:py-28 bg-muted/30 scroll-mt-14">
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex items-center gap-2 mb-2">
           <Lightbulb weight="bold" className="size-5 text-primary" />
