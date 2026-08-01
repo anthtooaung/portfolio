@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useLayoutEffect, useCallback } from 'react';
-import { House, User, Folder, GearSix, PaperPlaneRight, Sun, Moon, List, X } from '@phosphor-icons/react';
+import { House, User, Folder, GearSix, PaperPlaneRight, Sun, Moon, List, X, FileText } from '@phosphor-icons/react';
 import { useScrollSpy } from '@/hooks/useScrollSpy';
 
 const NAV_LINKS = [
@@ -7,6 +7,7 @@ const NAV_LINKS = [
   { label: 'About', href: '#about', icon: User },
   { label: 'Projects', href: '#projects', icon: Folder },
   { label: 'Skills', href: '#skills', icon: GearSix },
+  { label: 'Certificates', href: '#certificates', icon: FileText },
   { label: 'Contact', href: '#contact', icon: PaperPlaneRight },
 ];
 
