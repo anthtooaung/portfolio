@@ -24,7 +24,13 @@ Four-phase upgrade that transforms a functional prototype into a polished, perso
   3. Clicking "Resume" in the header navigates to `/resume` with Header and Footer hidden
   4. Navigating to `/resume` from `/` scrolls to the top of the resume page
   5. Scroll-spy navigation does not activate or throw errors on the `/resume` page
-**Plans**: TBD
+
+**Wave 1**
+- **Plan 01: Warm Theme Foundation** — Update design tokens to oklch amber/gold, refactor gradient to primary stop
+- **Plan 02: Route Skeleton and Conditional Chrome** — Configure routes, DefaultLayout, ScrollToTop, and Header resume link
+
+**Cross-cutting constraints:**
+- None (independent slices executing in wave 1)
 
 ### Phase 2: Resume Page + Print
 **Goal**: Users can view a professional resume page and print it as a PDF with one click
