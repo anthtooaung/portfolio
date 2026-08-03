@@ -27,7 +27,7 @@ export function HeroSection() {
 
           {/* Title with gradient + blinking cursor */}
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 leading-[1.05] animate-fade-up animation-delay-100">
-            <span className="text-gradient-violet">{title}</span>
+            <span className="text-gradient-warm">{title}</span>
             <span className="text-primary animate-cursor-blink font-mono">_</span>
           </h1>
 
