@@ -1,18 +1,19 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Header } from './components/Header';
-import { Footer } from './components/Footer';
+import { DefaultLayout } from './components/DefaultLayout';
+import { ScrollToTop } from './components/ScrollToTop';
 import { Home } from './pages/Home';
+import { ResumePage } from './pages/Resume';
 
 function App() {
   return (
     <BrowserRouter>
-      <div className="min-h-screen flex flex-col">
-        <Header />
-        <Routes>
+      <ScrollToTop />
+      <Routes>
+        <Route element={<DefaultLayout />}>
           <Route path="/" element={<Home />} />
-        </Routes>
-        <Footer />
-      </div>
+        </Route>
+        <Route path="/resume" element={<ResumePage />} />
+      </Routes>
     </BrowserRouter>
   );
 }

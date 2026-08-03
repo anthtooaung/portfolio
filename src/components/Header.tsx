@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useLayoutEffect, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { House, User, Folder, GearSix, PaperPlaneRight, Sun, Moon, List, X, FileText } from '@phosphor-icons/react';
 import { useScrollSpy } from '@/hooks/useScrollSpy';
 
@@ -127,6 +128,13 @@ export function Header() {
               </a>
             );
           })}
+          <Link
+            to="/resume"
+            className="relative flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-lg text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors duration-300"
+          >
+            <FileText weight="bold" className="size-3.5" />
+            Resume
+          </Link>
           <div className="w-px h-4 bg-border mx-1" />
           <button
             onClick={() => setDark(!dark)}
@@ -178,6 +186,14 @@ export function Header() {
                 </a>
               );
             })}
+            <Link
+              to="/resume"
+              onClick={() => setMobileOpen(false)}
+              className="flex items-center gap-2 px-3 py-2 text-xs rounded-lg text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors duration-300"
+            >
+              <FileText weight="bold" className="size-3.5" />
+              Resume
+            </Link>
           </nav>
         </div>
       )}
