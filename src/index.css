@@ -166,8 +166,8 @@
 }
 
 @layer utilities {
-  .text-gradient-violet {
-    background: linear-gradient(135deg, var(--primary), oklch(0.75 0.18 310));
+  .text-gradient-warm {
+    background: linear-gradient(135deg, var(--primary), oklch(0.78 0.12 75));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
