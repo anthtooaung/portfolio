@@ -1,6 +1,7 @@
 import { getSection } from '@/lib/markdown';
 import { ArrowDown } from '@phosphor-icons/react';
 import { Button } from '@/components/ui/button';
+import { CertificatesCarousel } from '@/components/CertificatesCarousel';
 
 export function HeroSection() {
   const hero = getSection('home/hero.md');
@@ -58,6 +59,9 @@ export function HeroSection() {
             />
           </div>
         </div>
+
+        {/* Certificates medal carousel */}
+        <CertificatesCarousel />
 
         {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2 text-muted-foreground animate-bounce animate-fade-up animation-delay-400">

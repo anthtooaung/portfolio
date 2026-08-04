@@ -8,7 +8,6 @@ const NAV_LINKS = [
   { label: 'About', href: '#about', icon: User },
   { label: 'Projects', href: '#projects', icon: Folder },
   { label: 'Skills', href: '#skills', icon: GearSix },
-  { label: 'Certificates', href: '#certificates', icon: FileText },
   { label: 'Contact', href: '#contact', icon: PaperPlaneRight },
 ];
 
