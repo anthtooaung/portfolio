@@ -13,85 +13,114 @@ const AMBER = '#f59e0b';
 
 export function CertificatesCarousel() {
   return (
-    <div className="w-full overflow-hidden mt-12 animate-fade-up animation-delay-400">
-      {/* Ribbon / medal bar */}
-      <div className="relative">
-        {/* Continuous ribbon line */}
-        <div className="absolute top-1/2 left-0 right-0 h-px bg-amber-500/30 -translate-y-1/2" />
+    <div className="mt-14 animate-fade-up" style={{ animationDelay: '1200ms' }}>
+      {/* Section label */}
+      <p className="text-center text-xs font-medium text-muted-foreground/60 uppercase tracking-widest mb-5">
+        Certifications
+      </p>
 
-        {/* Scrolling medals */}
-        <div className="cert-marquee">
-          <div className="cert-marquee-track">
-            {/* Double the items for seamless loop */}
-            {[...CERTS, ...CERTS].map(({ name, file, Icon }, i) => (
-              <a
-                key={`${file}-${i}`}
-                href={`/certificates/${file}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                title={`${name} — click to view`}
-                className="cert-medal shrink-0"
-              >
-                <span className="cert-medal-ribbon" />
-                <Icon weight="fill" className="cert-medal-icon" style={{ color: AMBER }} />
-              </a>
-            ))}
-          </div>
-        </div>
+      {/* Badge row */}
+      <div className="cert-badge-row">
+        {CERTS.map(({ name, file, Icon }, i) => (
+          <a
+            key={file}
+            href={`/certificates/${file}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            title={`${name} — click to view`}
+            className="cert-badge"
+            style={{ animationDelay: `${1300 + i * 80}ms` }}
+          >
+            <span className="cert-badge-icon-wrap">
+              <Icon weight="fill" className="cert-badge-icon" style={{ color: AMBER }} />
+            </span>
+            <span className="cert-badge-label">{name}</span>
+          </a>
+        ))}
       </div>
 
       <style>{`
-        .cert-marquee {
-          width: 100%;
-          overflow: hidden;
-          mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
-          -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
-        }
-        .cert-marquee-track {
+        .cert-badge-row {
           display: flex;
-          gap: 3rem;
-          animation: cert-scroll 20s linear infinite;
-          width: max-content;
+          justify-content: center;
+          flex-wrap: wrap;
+          gap: 0.75rem;
         }
-        .cert-medal {
+        .cert-badge {
           display: flex;
           flex-direction: column;
           align-items: center;
+          gap: 0.375rem;
           text-decoration: none;
-          position: relative;
-          transition: transform 0.2s ease;
+          padding: 0.625rem 1rem;
+          border-radius: 0.75rem;
+          border: 1px solid var(--border);
+          background: var(--card);
+          transition: all 0.25s ease;
           cursor: pointer;
+          animation: cert-badge-in 0.4s ease-out forwards;
+          opacity: 0;
         }
-        .cert-medal:hover {
-          transform: scale(1.2) translateY(-4px);
+        .cert-badge:hover {
+          border-color: ${AMBER}66;
+          background: ${AMBER}08;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 16px ${AMBER}15;
         }
-        .cert-medal-ribbon {
-          width: 2px;
-          height: 12px;
-          background: linear-gradient(to bottom, ${AMBER}44, ${AMBER});
-          border-radius: 0 0 1px 1px;
-          margin-bottom: -2px;
-        }
-        .cert-medal-icon {
+        .cert-badge-icon-wrap {
+          display: flex;
+          align-items: center;
+          justify-content: center;
           width: 2rem;
           height: 2rem;
+          transition: transform 0.25s ease;
+        }
+        .cert-badge:hover .cert-badge-icon-wrap {
+          transform: scale(1.15);
+        }
+        .cert-badge-icon {
+          width: 1.5rem;
+          height: 1.5rem;
           display: block;
-          filter: drop-shadow(0 2px 4px rgba(245, 158, 11, 0.3));
-          transition: filter 0.2s ease;
+          filter: drop-shadow(0 1px 2px rgba(245, 158, 11, 0.2));
+          transition: filter 0.25s ease;
         }
-        .cert-medal:hover .cert-medal-icon {
-          filter: drop-shadow(0 2px 8px rgba(245, 158, 11, 0.6));
+        .cert-badge:hover .cert-badge-icon {
+          filter: drop-shadow(0 2px 6px rgba(245, 158, 11, 0.4));
         }
-        @keyframes cert-scroll {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
+        .cert-badge-label {
+          font-size: 0.625rem;
+          font-weight: 500;
+          color: var(--muted-foreground);
+          white-space: nowrap;
+          letter-spacing: 0.01em;
+          transition: color 0.25s ease;
+        }
+        .cert-badge:hover .cert-badge-label {
+          color: var(--foreground);
+        }
+        @keyframes cert-badge-in {
+          from { opacity: 0; transform: translateY(6px); }
+          to { opacity: 1; transform: translateY(0); }
         }
         @media (prefers-reduced-motion: reduce) {
-          .cert-marquee-track {
+          .cert-badge {
             animation: none;
+            opacity: 1;
           }
-          .cert-medal:hover {
-            transform: scale(1.1);
+          .cert-badge:hover {
+            transform: none;
+          }
+        }
+        @media (max-width: 640px) {
+          .cert-badge-row {
+            gap: 0.5rem;
+          }
+          .cert-badge {
+            padding: 0.5rem 0.75rem;
+          }
+          .cert-badge-label {
+            font-size: 0.5625rem;
           }
         }
       `}</style>

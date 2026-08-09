@@ -120,22 +120,51 @@
     --sidebar-ring: oklch(0.72 0.15 75);
 }
 
-/* Cursor blink animation */
+/* ── Animations ── */
+
+/* Cursor blink */
 @keyframes cursor-blink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
 }
 
-/* Stagger entrance animations */
+/* Stagger entrance */
 @keyframes fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Animated gradient shift */
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Character reveal */
+@keyframes char-reveal {
+  from { opacity: 0; transform: translateY(8px) scale(0.95); filter: blur(2px); }
+  to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+
+/* Profile glow rotation */
+@keyframes glow-rotate {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Profile glow pulse */
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+  50% { opacity: 1; transform: translate(-50%, -50%) rotate(180deg) scale(1.08); }
+}
+
+/* Floating particles */
+@keyframes particle-float {
+  0%, 100% { transform: translate(0, 0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translate(var(--px), var(--py)); opacity: 0; }
 }
 
 @layer utilities {
@@ -150,6 +179,9 @@
   .animation-delay-200 { animation-delay: 200ms; }
   .animation-delay-300 { animation-delay: 300ms; }
   .animation-delay-400 { animation-delay: 400ms; }
+  .animation-delay-500 { animation-delay: 500ms; }
+  .animation-delay-600 { animation-delay: 600ms; }
+  .animation-delay-700 { animation-delay: 700ms; }
 }
 
 /* Respect reduced motion preference */
@@ -163,15 +195,106 @@
   .animate-fade-up {
     opacity: 1 !important;
   }
+  .hero-char-reveal {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+  .hero-glow-ring::before,
+  .hero-glow-ring::after {
+    animation: none !important;
+  }
+  .hero-particle {
+    animation: none !important;
+    opacity: 0.3 !important;
+  }
 }
 
+/* ── Hero Effects ── */
+
+/* Animated gradient text */
 @layer utilities {
+  .text-gradient-animated {
+    background: linear-gradient(
+      135deg,
+      var(--primary),
+      oklch(0.78 0.14 75),
+      oklch(0.65 0.16 50),
+      var(--primary),
+      oklch(0.78 0.12 90)
+    );
+    background-size: 300% 300%;
+    animation: gradient-shift 6s ease infinite;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
   .text-gradient-warm {
     background: linear-gradient(135deg, var(--primary), oklch(0.78 0.12 75));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
+
+  /* Character reveal */
+  .hero-char-reveal {
+    display: inline-block;
+    opacity: 0;
+    animation: char-reveal 0.4s ease-out forwards;
+  }
+
+  /* Profile photo glow ring */
+  .hero-glow-ring {
+    position: relative;
+  }
+  .hero-glow-ring::before {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    background: conic-gradient(
+      from 0deg,
+      var(--primary),
+      oklch(0.78 0.14 75),
+      oklch(0.65 0.16 50),
+      oklch(0.78 0.12 90),
+      var(--primary)
+    );
+    animation: glow-rotate 4s linear infinite;
+    z-index: -1;
+  }
+  .hero-glow-ring::after {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    background: conic-gradient(
+      from 0deg,
+      var(--primary),
+      oklch(0.78 0.14 75),
+      oklch(0.65 0.16 50),
+      oklch(0.78 0.12 90),
+      var(--primary)
+    );
+    filter: blur(16px);
+    opacity: 0.5;
+    animation: glow-pulse 3s ease-in-out infinite;
+    z-index: -2;
+  }
+
+  /* Floating particles */
+  .hero-particle {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--primary);
+    animation: particle-float var(--dur) ease-in-out infinite;
+    animation-delay: var(--delay);
+    opacity: 0;
+    pointer-events: none;
+  }
+  .hero-particle-sm { width: 3px; height: 3px; }
+  .hero-particle-md { width: 4px; height: 4px; }
+  .hero-particle-lg { width: 5px; height: 5px; }
 }
 
 @layer base {
