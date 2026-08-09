@@ -74,7 +74,7 @@ export function HeroSection() {
   const titleEnd = 200 + title.length * 45;
 
   return (
-    <section id="home" className="relative min-h-[85vh] flex items-center overflow-hidden scroll-mt-14">
+    <section id="home" className="relative min-h-[85vh] flex items-center scroll-mt-14">
       {/* Floating particles */}
       <FloatingParticles />
 

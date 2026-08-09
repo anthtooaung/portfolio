@@ -31,7 +31,7 @@ function OrbitBadge({
       title={`${name} — click to view`}
       className="cert-orbit-badge"
       style={{
-        transform: `rotate(${angle}deg) translate(0, calc(-1 * var(--cert-orbit-radius))) rotate(${-angle}deg)`,
+        transform: `translate(-50%, -50%) rotate(${angle}deg) translate(0, calc(-1 * var(--cert-orbit-radius))) rotate(${-angle}deg)`,
       }}
     >
       <Icon weight="fill" className="size-3.5 text-primary" />
