@@ -147,12 +147,6 @@
   to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
 }
 
-/* Profile glow rotation */
-@keyframes glow-rotate {
-  from { transform: translate(-50%, -50%) rotate(0deg); }
-  to { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
 /* Profile glow pulse */
 @keyframes glow-pulse {
   0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) rotate(0deg) scale(1); }
@@ -205,8 +199,7 @@
     animation: none !important;
     opacity: 1 !important;
   }
-  .hero-glow-ring::before,
-  .hero-glow-ring::after {
+  .cert-orbit-glow {
     animation: none !important;
   }
   .hero-particle {
@@ -249,44 +242,7 @@
     animation: char-reveal 0.4s ease-out forwards;
   }
 
-  /* Profile photo glow ring */
-  .hero-glow-ring {
-    position: relative;
-  }
-  .hero-glow-ring::before {
-    content: '';
-    position: absolute;
-    inset: -6px;
-    border-radius: 50%;
-    background: conic-gradient(
-      from 0deg,
-      var(--primary),
-      oklch(0.78 0.14 75),
-      oklch(0.65 0.16 50),
-      oklch(0.78 0.12 90),
-      var(--primary)
-    );
-    animation: glow-rotate 4s linear infinite;
-    z-index: -1;
-  }
-  .hero-glow-ring::after {
-    content: '';
-    position: absolute;
-    inset: -6px;
-    border-radius: 50%;
-    background: conic-gradient(
-      from 0deg,
-      var(--primary),
-      oklch(0.78 0.14 75),
-      oklch(0.65 0.16 50),
-      oklch(0.78 0.12 90),
-      var(--primary)
-    );
-    filter: blur(16px);
-    opacity: 0.5;
-    animation: glow-pulse 3s ease-in-out infinite;
-    z-index: -2;
-  }
+  /* Profile photo glow — replaced by .cert-orbit-glow in orbit section */
 
   /* Floating particles */
   .hero-particle {
@@ -304,42 +260,74 @@
 
   /* ── Certificates Orbit ── */
 
+  /* Fixed-size container — orbit extends beyond the photo */
   .cert-orbit-container {
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    /* 224px photo + 2×160px orbit radius + badge padding */
+    width: 544px;
+    height: 544px;
   }
 
-  .cert-orbit-ring {
+  /* Layer 0 — Glow behind everything */
+  .cert-orbit-glow {
     position: absolute;
-    inset: 0;
-    pointer-events: none;
-    --cert-orbit-radius: 130px;
-  }
-
-  .cert-orbit-track {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: calc(var(--cert-orbit-radius) * 2);
-    height: calc(var(--cert-orbit-radius) * 2);
+    /* Centered on the photo center (272px from top/left) */
+    top: 272px;
+    left: 272px;
+    width: 236px;
+    height: 236px;
     transform: translate(-50%, -50%);
     border-radius: 50%;
-    border: 1px dashed var(--border);
-    opacity: 0.4;
+    background: conic-gradient(
+      from 0deg,
+      var(--primary),
+      oklch(0.78 0.14 75),
+      oklch(0.65 0.16 50),
+      oklch(0.78 0.12 90),
+      var(--primary)
+    );
+    filter: blur(20px);
+    opacity: 0.45;
+    z-index: 0;
+    animation: glow-pulse 3s ease-in-out infinite;
   }
 
+  /* Layer 10 — Dotted orbit track */
+  .cert-orbit-track {
+    position: absolute;
+    top: 272px;
+    left: 272px;
+    width: 320px;
+    height: 320px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 1.5px dashed var(--border);
+    opacity: 0.5;
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  /* Layer 20 — Spinning badge ring */
   .cert-orbit-spin {
     position: absolute;
-    inset: 0;
+    top: 272px;
+    left: 272px;
+    width: 0;
+    height: 0;
+    z-index: 20;
     animation: cert-orbit-rotate 28s linear infinite;
+    --orbit-r: 160px;
+  }
+
+  /* Pause orbit when any badge is hovered */
+  .cert-orbit-container:has(.cert-orbit-badge:hover) .cert-orbit-spin {
+    animation-play-state: paused;
   }
 
   .cert-orbit-badge {
     position: absolute;
-    top: 50%;
-    left: 50%;
+    top: 0;
+    left: 0;
     display: flex;
     align-items: center;
     gap: 0.25rem;
@@ -352,14 +340,12 @@
     cursor: pointer;
     white-space: nowrap;
     transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
-    z-index: 2;
   }
 
   .cert-orbit-badge:hover {
     background: var(--accent);
     border-color: var(--primary);
     box-shadow: 0 0 16px oklch(0.70 0.15 75 / 30%);
-    z-index: 10;
   }
 
   .cert-orbit-badge-label {
@@ -374,41 +360,77 @@
     color: var(--foreground);
   }
 
-  /* Pause entire orbit on hover over any badge */
-  .cert-orbit-ring:has(.cert-orbit-badge:hover) .cert-orbit-spin {
-    animation-play-state: paused;
+  /* Layer 30 — Profile photo on top */
+  .cert-orbit-photo {
+    position: absolute;
+    top: 272px;
+    left: 272px;
+    width: 224px;
+    height: 224px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 8px 32px oklch(0 0 0 / 0.25);
+    z-index: 30;
   }
 
-  /* Mobile: static wrap, no orbit */
+  /* ── Mobile: static badges, no orbit ── */
   @media (max-width: 768px) {
-    .cert-orbit-ring {
-      position: relative;
-      inset: auto;
+    .cert-orbit-container {
+      width: auto;
+      height: auto;
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.5rem;
-      margin-top: 1rem;
-      pointer-events: auto;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .cert-orbit-glow {
+      position: relative;
+      top: auto;
+      left: auto;
+      transform: none;
+      width: 172px;
+      height: 172px;
+      z-index: 0;
     }
 
     .cert-orbit-track { display: none; }
 
     .cert-orbit-spin {
-      position: static;
-      display: contents;
+      position: relative;
+      top: auto;
+      left: auto;
+      width: auto;
+      height: auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+      animation: none;
     }
 
     .cert-orbit-badge {
       position: static;
       transform: none !important;
-      animation: none;
-      opacity: 1;
+    }
+
+    .cert-orbit-photo {
+      position: relative;
+      top: auto;
+      left: auto;
+      transform: none;
+      width: 160px;
+      height: 160px;
+      z-index: 30;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
     .cert-orbit-spin {
+      animation: none !important;
+    }
+    .cert-orbit-glow {
       animation: none !important;
     }
   }

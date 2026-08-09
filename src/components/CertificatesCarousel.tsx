@@ -31,7 +31,7 @@ function OrbitBadge({
       title={`${name} — click to view`}
       className="cert-orbit-badge"
       style={{
-        transform: `translate(-50%, -50%) rotate(${angle}deg) translate(0, calc(-1 * var(--cert-orbit-radius))) rotate(${-angle}deg)`,
+        transform: `rotate(${angle}deg) translate(0, calc(-1 * var(--orbit-r))) rotate(${-angle}deg)`,
       }}
     >
       <Icon weight="fill" className="size-3.5 text-primary" />
@@ -41,28 +41,21 @@ function OrbitBadge({
 }
 
 /**
- * Certificates orbiting around the profile photo.
- * Rendered as a child of HeroSection — the parent provides the glow-ring wrapper.
- * On mobile / reduced-motion, falls back to a static ring.
+ * Orbiting certificate badges.
+ * Parent (HeroSection) provides the container, glow, and track.
  */
 export function CertificatesCarousel() {
   return (
-    <div className="cert-orbit-ring">
-      {/* Orbit track ring */}
-      <div className="cert-orbit-track" />
-
-      {/* Spinning container */}
-      <div className="cert-orbit-spin">
-        {CERTS.map(({ name, file, Icon }, i) => (
-          <OrbitBadge
-            key={file}
-            name={name}
-            file={file}
-            Icon={Icon}
-            angle={(360 / CERTS.length) * i}
-          />
-        ))}
-      </div>
+    <div className="cert-orbit-spin">
+      {CERTS.map(({ name, file, Icon }, i) => (
+        <OrbitBadge
+          key={file}
+          name={name}
+          file={file}
+          Icon={Icon}
+          angle={(360 / CERTS.length) * i}
+        />
+      ))}
     </div>
   );
 }

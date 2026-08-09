@@ -74,7 +74,7 @@ export function HeroSection() {
   const titleEnd = 200 + title.length * 45;
 
   return (
-    <section id="home" className="relative min-h-[85vh] flex items-center scroll-mt-14">
+    <section id="home" className="relative min-h-[85vh] flex items-center scroll-mt-14 overflow-x-clip">
       {/* Floating particles */}
       <FloatingParticles />
 
@@ -134,15 +134,24 @@ export function HeroSection() {
 
           {/* Profile photo with orbiting certificates */}
           <div
-            className="shrink-0 cert-orbit-container animate-fade-up"
+            className="shrink-0 animate-fade-up"
             style={{ animationDelay: `${titleEnd + 300}ms` }}
           >
-            <CertificatesCarousel />
-            <div className="hero-glow-ring">
+            <div className="cert-orbit-container">
+              {/* Layer 0: Glow */}
+              <div className="cert-orbit-glow" />
+
+              {/* Layer 10: Dotted track */}
+              <div className="cert-orbit-track" />
+
+              {/* Layer 20: Orbiting certificates */}
+              <CertificatesCarousel />
+
+              {/* Layer 30: Profile photo (top) */}
               <img
                 src="/profile.jpg"
                 alt="Ant Htoo Aung"
-                className="w-40 h-40 md:w-56 md:h-56 rounded-full object-cover shadow-lg relative z-[1]"
+                className="cert-orbit-photo"
               />
             </div>
           </div>
