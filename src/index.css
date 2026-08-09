@@ -167,6 +167,12 @@
   100% { transform: translate(var(--px), var(--py)); opacity: 0; }
 }
 
+/* Certificates orbit */
+@keyframes cert-orbit-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
 @layer utilities {
   .animate-cursor-blink {
     animation: cursor-blink 1s step-end infinite;
@@ -295,6 +301,113 @@
   .hero-particle-sm { width: 3px; height: 3px; }
   .hero-particle-md { width: 4px; height: 4px; }
   .hero-particle-lg { width: 5px; height: 5px; }
+
+  /* ── Certificates Orbit ── */
+
+  .cert-orbit-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cert-orbit-ring {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    --cert-orbit-radius: 88px;
+  }
+
+  .cert-orbit-track {
+    position: absolute;
+    inset: -12px;
+    border-radius: 50%;
+    border: 1px dashed var(--border);
+    opacity: 0.5;
+  }
+
+  .cert-orbit-spin {
+    position: absolute;
+    inset: 0;
+    animation: cert-orbit-rotate 28s linear infinite;
+  }
+
+  .cert-orbit-badge {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.625rem;
+    border-radius: 9999px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    text-decoration: none;
+    pointer-events: auto;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+    margin-top: -0.75rem;
+    margin-left: -1.5rem;
+  }
+
+  .cert-orbit-badge:hover {
+    background: var(--accent);
+    border-color: var(--primary);
+    box-shadow: 0 0 12px oklch(0.70 0.15 75 / 25%);
+    z-index: 10;
+  }
+
+  .cert-orbit-badge-label {
+    font-size: 0.625rem;
+    font-weight: 500;
+    color: var(--muted-foreground);
+    letter-spacing: 0.01em;
+    transition: color 0.2s;
+  }
+
+  .cert-orbit-badge:hover .cert-orbit-badge-label {
+    color: var(--foreground);
+  }
+
+  /* Pause entire orbit on hover over any badge */
+  .cert-orbit-ring:has(.cert-orbit-badge:hover) .cert-orbit-spin {
+    animation-play-state: paused;
+  }
+
+  @media (max-width: 768px) {
+    .cert-orbit-ring {
+      position: relative;
+      inset: auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      --cert-orbit-radius: 0px;
+    }
+
+    .cert-orbit-track { display: none; }
+
+    .cert-orbit-spin {
+      position: static;
+      display: contents;
+    }
+
+    .cert-orbit-badge {
+      position: static;
+      margin: 0;
+      animation: none;
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cert-orbit-spin {
+      animation: none !important;
+    }
+  }
 }
 
 @layer base {

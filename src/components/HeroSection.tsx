@@ -132,21 +132,21 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* Profile photo with animated glow ring */}
+          {/* Profile photo with orbiting certificates */}
           <div
-            className="shrink-0 hero-glow-ring animate-fade-up"
+            className="shrink-0 cert-orbit-container animate-fade-up"
             style={{ animationDelay: `${titleEnd + 300}ms` }}
           >
-            <img
-              src="/profile.jpg"
-              alt="Ant Htoo Aung"
-              className="w-40 h-40 md:w-56 md:h-56 rounded-full object-cover shadow-lg relative z-[1]"
-            />
+            <CertificatesCarousel />
+            <div className="hero-glow-ring">
+              <img
+                src="/profile.jpg"
+                alt="Ant Htoo Aung"
+                className="w-40 h-40 md:w-56 md:h-56 rounded-full object-cover shadow-lg relative z-[1]"
+              />
+            </div>
           </div>
         </div>
-
-        {/* Certificates carousel */}
-        <CertificatesCarousel />
 
         {/* Scroll indicator */}
         <div
