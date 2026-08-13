@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useLayoutEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { House, User, Folder, GearSix, PaperPlaneRight, Sun, Moon, List, X, FileText } from '@phosphor-icons/react';
+import { House, User, Folder, GearSix, PaperPlaneRight, List, X, FileText } from '@phosphor-icons/react';
 import { useScrollSpy } from '@/hooks/useScrollSpy';
 
 const NAV_LINKS = [
@@ -20,23 +20,6 @@ export function Header() {
   const navRef = useRef<HTMLElement>(null);
   const activeIdRef = useRef(NAV_LINKS[0].href.slice(1));
   const activeId = useScrollSpy(SECTION_IDS);
-  const [dark, setDark] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('theme') === 'dark' ||
-        (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
-    }
-    return false;
-  });
-
-  useEffect(() => {
-    const root = document.documentElement;
-    if (dark) {
-      root.classList.add('dark');
-    } else {
-      root.classList.remove('dark');
-    }
-    localStorage.setItem('theme', dark ? 'dark' : 'light');
-  }, [dark]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -135,24 +118,10 @@ export function Header() {
             Resume
           </Link>
           <div className="w-px h-4 bg-border mx-1" />
-          <button
-            onClick={() => setDark(!dark)}
-            className="p-1.5 text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors"
-            aria-label="Toggle theme"
-          >
-            {dark ? <Sun weight="bold" className="size-3.5" /> : <Moon weight="bold" className="size-3.5" />}
-          </button>
         </nav>
 
         {/* Mobile controls */}
         <div className="flex md:hidden items-center gap-1">
-          <button
-            onClick={() => setDark(!dark)}
-            className="p-1.5 text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors"
-            aria-label="Toggle theme"
-          >
-            {dark ? <Sun weight="bold" className="size-3.5" /> : <Moon weight="bold" className="size-3.5" />}
-          </button>
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="p-1.5 text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors"
