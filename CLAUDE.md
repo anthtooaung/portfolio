@@ -39,21 +39,6 @@ src/
 ```
 
 ## Session Behavior
-
-### On Session Start
-
-When a new session begins, **always ask the user** before doing any work:
-
-> Would you like to create a new branch or continue on the current branch?
-> Should I create a worktree for this session?
-
-- If "new branch" → ask for a branch name (or suggest one based on the task), then create and switch to it via `git checkout -b <branch>`.
-- If "current branch" → confirm the current branch with `git branch --show-current` and proceed.
-- If "yes worktree" → create a worktree under `.claude/worktrees/` before making changes.
-- If "no worktree" → proceed in the current directory.
-
-Do not make assumptions or skip this prompt.
-
 ### On Session End (Goodbye)
 
 When the user signals they are finishing the session — any phrase like "ok thank you today", "bye bye", "see you", "goodbye", "that's all for today", "I'm done", or when the user types `/exit` — **before responding with a farewell**, automatically:
