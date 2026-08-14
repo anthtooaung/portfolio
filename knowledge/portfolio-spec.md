@@ -101,11 +101,11 @@ portfolio-app/
 **Goal:** Add in-app PDF preview capability for certificates and resume.
 
 **Tasks:**
-- [ ] Create `src/components/PdfViewer.tsx` component
-- [ ] Use native `<object>` or `<iframe>` for PDF rendering
-- [ ] Add modal/dialog wrapper for certificate preview
-- [ ] Add download button in PDF viewer modal
-- [ ] Integrate with `CertificatesSection.tsx`
+- [x] Create `src/components/PdfViewer.tsx` component
+- [x] Use native `<object>` or `<iframe>` for PDF rendering
+- [x] Add modal/dialog wrapper for certificate preview
+- [x] Add download button in PDF viewer modal
+- [x] Integrate with `CertificatesCarousel.tsx`
 - [ ] Create PDF viewer for Resume page
 
 **Component API:**

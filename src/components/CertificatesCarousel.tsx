@@ -1,10 +1,14 @@
-import { getCertificates } from '@/lib/certs';
+import { useState } from 'react';
+import { getCertificates, type Certificate } from '@/lib/certs';
+import { PdfViewer } from '@/components/PdfViewer';
 
 const CERTS = getCertificates();
 
 export function CertificatesCarousel() {
-  const handleCertClick = (pdf: string) => {
-    window.open(pdf, '_blank', 'noopener,noreferrer');
+  const [selectedCert, setSelectedCert] = useState<Certificate | null>(null);
+
+  const handleCertClick = (cert: Certificate) => {
+    setSelectedCert(cert);
   };
 
   return (
@@ -13,31 +17,31 @@ export function CertificatesCarousel() {
       <div className="cert-marquee">
         <div className="cert-marquee-track">
           {/* Double the items for seamless loop */}
-          {[...CERTS, ...CERTS].map(({ title, pdf }, i) => (
+          {[...CERTS, ...CERTS].map((cert, i) => (
             <div
-              key={`${pdf}-${i}`}
-              onClick={() => handleCertClick(pdf)}
-              title={`${title} — click to view full PDF`}
+              key={`${cert.pdf}-${i}`}
+              onClick={() => handleCertClick(cert)}
+              title={`${cert.title} — click to view full PDF`}
               className="cert-card shrink-0"
               role="button"
               tabIndex={0}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault();
-                  handleCertClick(pdf);
+                  handleCertClick(cert);
                 }
               }}
             >
               <object
-                data={pdf}
+                data={cert.pdf}
                 type="application/pdf"
                 className="cert-pdf"
-                aria-label={title}
+                aria-label={cert.title}
                 tabIndex={-1}
               >
-                <div className="cert-pdf-fallback">{title}</div>
+                <div className="cert-pdf-fallback">{cert.title}</div>
               </object>
-              <span className="cert-label">{title}</span>
+              <span className="cert-label">{cert.title}</span>
             </div>
           ))}
         </div>
@@ -119,6 +123,13 @@ export function CertificatesCarousel() {
           }
         }
       `}</style>
+
+      <PdfViewer
+        src={selectedCert?.pdf ?? ''}
+        title={selectedCert?.title ?? ''}
+        open={selectedCert !== null}
+        onOpenChange={(open) => { if (!open) setSelectedCert(null); }}
+      />
     </div>
   );
 }
