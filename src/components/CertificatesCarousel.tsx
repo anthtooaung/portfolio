@@ -1,15 +1,10 @@
-const CERTS = [
-  { name: 'Certificate 1', file: 'certificate-bwsddiaa3s3c-1785140297.pdf' },
-  { name: 'Certificate 2', file: 'certificate-gu2huv8wu79r-1785045235.pdf' },
-  { name: 'Certificate 3', file: 'certificate-kss3uqvjvr7h-1781894910.pdf' },
-  { name: 'Certificate 4', file: 'certificate-m4aup67k7vr7-1785048504.pdf' },
-  { name: 'Certificate 5', file: 'certificate-txdjx8tkhpfb-1784876279.pdf' },
-  { name: 'Certificate 6', file: 'certificate-x7qxsdfhic9h-1785144854.pdf' },
-];
+import { getCertificates } from '@/lib/certs';
+
+const CERTS = getCertificates();
 
 export function CertificatesCarousel() {
-  const handleCertClick = (file: string) => {
-    window.open(`/certificates/${file}`, '_blank', 'noopener,noreferrer');
+  const handleCertClick = (pdf: string) => {
+    window.open(pdf, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -18,31 +13,31 @@ export function CertificatesCarousel() {
       <div className="cert-marquee">
         <div className="cert-marquee-track">
           {/* Double the items for seamless loop */}
-          {[...CERTS, ...CERTS].map(({ name, file }, i) => (
+          {[...CERTS, ...CERTS].map(({ title, pdf }, i) => (
             <div
-              key={`${file}-${i}`}
-              onClick={() => handleCertClick(file)}
-              title={`${name} — click to view full PDF`}
+              key={`${pdf}-${i}`}
+              onClick={() => handleCertClick(pdf)}
+              title={`${title} — click to view full PDF`}
               className="cert-card shrink-0"
               role="button"
               tabIndex={0}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault();
-                  handleCertClick(file);
+                  handleCertClick(pdf);
                 }
               }}
             >
               <object
-                data={`/certificates/${file}`}
+                data={pdf}
                 type="application/pdf"
                 className="cert-pdf"
-                aria-label={name}
+                aria-label={title}
                 tabIndex={-1}
               >
-                <div className="cert-pdf-fallback">{name}</div>
+                <div className="cert-pdf-fallback">{title}</div>
               </object>
-              <span className="cert-label">{name}</span>
+              <span className="cert-label">{title}</span>
             </div>
           ))}
         </div>

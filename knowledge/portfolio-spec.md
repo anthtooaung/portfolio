@@ -50,15 +50,15 @@ portfolio-app/
 **Goal:** Remove light mode entirely, force dark mode as default across the site.
 
 **Tasks:**
-- [ ] Remove light mode CSS variables from `:root` block in `index.css`
-- [ ] Move dark mode variables to be the default (directly in `:root`)
-- [ ] Remove the `.dark` class selector from `index.css`
-- [ ] Remove dark mode toggle button from `Header.tsx` (both desktop and mobile)
-- [ ] Remove `dark` state and `useEffect` for theme switching from `Header.tsx`
-- [ ] Remove `localStorage` theme persistence logic
-- [ ] Remove `Sun` and `Moon` icon imports from `Header.tsx`
-- [ ] Add `class="dark"` to `<html>` in `index.html` (ensure dark mode is always active)
-- [ ] Verify all components render correctly in dark-only mode
+- [x] Remove light mode CSS variables from `:root` block in `index.css`
+- [x] Move dark mode variables to be the default (directly in `:root`)
+- [x] Remove the `.dark` class selector from `index.css`
+- [x] Remove dark mode toggle button from `Header.tsx` (both desktop and mobile)
+- [x] Remove `dark` state and `useEffect` for theme switching from `Header.tsx`
+- [x] Remove `localStorage` theme persistence logic
+- [x] Remove `Sun` and `Moon` icon imports from `Header.tsx`
+- [x] Add `class="dark"` to `<html>` in `index.html` (ensure dark mode is always active)
+- [x] Verify all components render correctly in dark-only mode
 
 **Files to modify:**
 - `src/index.css`
@@ -72,11 +72,11 @@ portfolio-app/
 **Goal:** Replace hardcoded certificate data with a JSON database that drives skill percentages and verification.
 
 **Tasks:**
-- [ ] Create `src/content/certificates.json` with certificate-to-skill mapping
-- [ ] Create `src/lib/certs.ts` helper to load and parse certificate data
-- [ ] Refactor `CertificatesSection.tsx` to use JSON data
-- [ ] Add TypeScript types for certificate data structure
-- [ ] Implement skill percentage calculation based on certificate count
+- [x] Create `src/content/certificates.json` with certificate-to-skill mapping
+- [x] Create `src/lib/certs.ts` helper to load and parse certificate data
+- [x] Refactor `CertificatesCarousel.tsx` to use JSON data
+- [x] Add TypeScript types for certificate data structure
+- [x] Implement skill percentage calculation based on certificate count
 
 **JSON Schema:**
 ```json
