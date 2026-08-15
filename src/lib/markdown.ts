@@ -18,6 +18,7 @@ import skillsRaw from '../content/home/skills.md?raw';
 import contactRaw from '../content/home/contact.md?raw';
 import portfolioRaw from '../content/projects/portfolio.md?raw';
 import dashboardRaw from '../content/projects/dashboard.md?raw';
+import resumeRaw from '../content/resume.md?raw';
 
 const modules: Record<string, string> = {
   './content/home/hero.md': heroRaw,
@@ -26,6 +27,7 @@ const modules: Record<string, string> = {
   './content/home/contact.md': contactRaw,
   './content/projects/portfolio.md': portfolioRaw,
   './content/projects/dashboard.md': dashboardRaw,
+  './content/resume.md': resumeRaw,
 };
 
 /**

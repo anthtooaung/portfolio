@@ -12,7 +12,7 @@ export function CertificatesCarousel() {
   };
 
   return (
-    <div className="w-full overflow-hidden mt-12 animate-fade-up animation-delay-400">
+    <section id="certificates" className="w-full overflow-hidden mt-12 animate-fade-up animation-delay-400">
       {/* Scrolling PDF previews */}
       <div className="cert-marquee">
         <div className="cert-marquee-track">
@@ -130,6 +130,6 @@ export function CertificatesCarousel() {
         open={selectedCert !== null}
         onOpenChange={(open) => { if (!open) setSelectedCert(null); }}
       />
-    </div>
+    </section>
   );
 }

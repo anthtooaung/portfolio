@@ -1,7 +1,13 @@
 import { useState, useEffect, useRef, useLayoutEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { House, User, Folder, GearSix, PaperPlaneRight, List, X, FileText } from '@phosphor-icons/react';
+import { House, User, Folder, GearSix, PaperPlaneRight, List, X, Trophy, Certificate, FileText } from '@phosphor-icons/react';
 import { useScrollSpy } from '@/hooks/useScrollSpy';
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from '@/components/ui/dropdown-menu';
 
 const NAV_LINKS = [
   { label: 'Home', href: '#home', icon: House },
@@ -110,13 +116,45 @@ export function Header() {
               </a>
             );
           })}
-          <Link
-            to="/resume"
-            className="relative flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-lg text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors duration-300"
-          >
-            <FileText weight="bold" className="size-3.5" />
-            Resume
-          </Link>
+
+          {/* Achievements dropdown */}
+          <DropdownMenu>
+            <DropdownMenuTrigger
+              className="relative flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-lg text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors duration-300 outline-none"
+            >
+              <Trophy weight="bold" className="size-3.5" />
+              Achievements
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" sideOffset={8} className="min-w-[12rem]">
+              <DropdownMenuItem asChild>
+                <a
+                  href="#certificates"
+                  onClick={(e) => { e.preventDefault(); handleNavClick('#certificates'); }}
+                  className="flex items-center gap-2 cursor-pointer"
+                >
+                  <Certificate weight="bold" className="size-3.5" />
+                  Certificates
+                </a>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link to="/resume" className="flex items-center gap-2 cursor-pointer">
+                  <FileText weight="bold" className="size-3.5" />
+                  Resume
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <a
+                  href="#skills"
+                  onClick={(e) => { e.preventDefault(); handleNavClick('#skills'); }}
+                  className="flex items-center gap-2 cursor-pointer"
+                >
+                  <GearSix weight="bold" className="size-3.5" />
+                  Skills
+                </a>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
           <div className="w-px h-4 bg-border mx-1" />
         </nav>
 
@@ -154,14 +192,38 @@ export function Header() {
                 </a>
               );
             })}
-            <Link
-              to="/resume"
-              onClick={() => setMobileOpen(false)}
-              className="flex items-center gap-2 px-3 py-2 text-xs rounded-lg text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors duration-300"
-            >
-              <FileText weight="bold" className="size-3.5" />
-              Resume
-            </Link>
+
+            {/* Achievements section in mobile */}
+            <div className="mt-2 pt-2 border-t border-border">
+              <div className="flex items-center gap-2 px-3 py-1.5 text-xs text-muted-foreground font-medium">
+                <Trophy weight="bold" className="size-3.5" />
+                Achievements
+              </div>
+              <a
+                href="#certificates"
+                onClick={(e) => { e.preventDefault(); handleNavClick('#certificates'); }}
+                className="flex items-center gap-2 pl-8 pr-3 py-2 text-xs rounded-lg text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors duration-300"
+              >
+                <Certificate weight="bold" className="size-3.5" />
+                Certificates
+              </a>
+              <Link
+                to="/resume"
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center gap-2 pl-8 pr-3 py-2 text-xs rounded-lg text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors duration-300"
+              >
+                <FileText weight="bold" className="size-3.5" />
+                Resume
+              </Link>
+              <a
+                href="#skills"
+                onClick={(e) => { e.preventDefault(); handleNavClick('#skills'); }}
+                className="flex items-center gap-2 pl-8 pr-3 py-2 text-xs rounded-lg text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors duration-300"
+              >
+                <GearSix weight="bold" className="size-3.5" />
+                Skills
+              </a>
+            </div>
           </nav>
         </div>
       )}

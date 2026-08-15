@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
+import { AudioGuide } from '@/components/AudioGuide';
 
 export function DefaultLayout() {
   return (
@@ -10,6 +11,7 @@ export function DefaultLayout() {
         <Outlet />
       </main>
       <Footer />
+      <AudioGuide src="/audio/intro-guide.mp3" />
     </div>
   );
 }
