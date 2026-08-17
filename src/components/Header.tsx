@@ -127,14 +127,10 @@ export function Header() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start" sideOffset={8} className="min-w-[12rem]">
               <DropdownMenuItem asChild>
-                <a
-                  href="#certificates"
-                  onClick={(e) => { e.preventDefault(); handleNavClick('#certificates'); }}
-                  className="flex items-center gap-2 cursor-pointer"
-                >
+                <Link to="/certificates" className="flex items-center gap-2 cursor-pointer">
                   <Certificate weight="bold" className="size-3.5" />
                   Certificates
-                </a>
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link to="/resume" className="flex items-center gap-2 cursor-pointer">
@@ -199,14 +195,14 @@ export function Header() {
                 <Trophy weight="bold" className="size-3.5" />
                 Achievements
               </div>
-              <a
-                href="#certificates"
-                onClick={(e) => { e.preventDefault(); handleNavClick('#certificates'); }}
+              <Link
+                to="/certificates"
+                onClick={() => setMobileOpen(false)}
                 className="flex items-center gap-2 pl-8 pr-3 py-2 text-xs rounded-lg text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors duration-300"
               >
                 <Certificate weight="bold" className="size-3.5" />
                 Certificates
-              </a>
+              </Link>
               <Link
                 to="/resume"
                 onClick={() => setMobileOpen(false)}
