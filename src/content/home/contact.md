@@ -3,11 +3,9 @@ title: "Get In Touch"
 email: "hello@mrant.dev"
 socials:
   - name: "GitHub"
-    url: "https://github.com/mrant"
+    url: "https://github.com/anthtooaung"
   - name: "LinkedIn"
-    url: "https://linkedin.com/in/mrant"
-  - name: "Twitter"
-    url: "https://twitter.com/mrant"
+    url: "https://www.linkedin.com/in/ant-htoo-aung-460006395/"
 ---
 
 Let's build something great together.

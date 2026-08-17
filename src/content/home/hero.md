@@ -1,6 +1,6 @@
 ---
 title: "Mr.Ant"
-subtitle: "Full-Stack Developer & UI Designer"
+subtitle: "Full-Stack Developer"
 cta: "View My Work"
 ctaLink: "#projects"
 ---

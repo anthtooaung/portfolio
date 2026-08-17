@@ -1,16 +1,9 @@
-import { getSection } from '@/lib/markdown';
+import { Link } from 'react-router-dom';
 import { Lightbulb } from '@phosphor-icons/react';
-
-interface Skill {
-  name: string;
-  level: number;
-}
+import { getSkills, getSkillLevel, getCertificatesBySkill } from '@/lib/certs';
 
 export function SkillsSection() {
-  const skillsData = getSection('home/skills.md');
-  if (!skillsData) return null;
-
-  const skills: Skill[] = (skillsData.meta.skills as Skill[]) || [];
+  const skills = getSkills();
 
   return (
     <section id="skills" className="py-20 md:py-28 bg-muted/30 scroll-mt-14">
@@ -24,27 +17,38 @@ export function SkillsSection() {
         </p>
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-          {skills.map((skill) => (
-            <div
-              key={skill.name}
-              className="group p-5 rounded-xl border bg-card hover:shadow-md hover:border-primary/20 transition-all duration-300"
-            >
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-primary/10 text-primary">
-                  {skill.name}
-                </span>
-                <span className="text-xs text-muted-foreground font-mono font-medium">
-                  {skill.level}%
-                </span>
-              </div>
-              <div className="h-1.5 bg-secondary rounded-full overflow-hidden">
-                <div
-                  className="h-full rounded-full bg-primary transition-all duration-700"
-                  style={{ width: `${skill.level}%` }}
-                />
-              </div>
-            </div>
-          ))}
+          {skills.map((skill) => {
+            const level = getSkillLevel(skill.slug);
+            const certCount = getCertificatesBySkill(skill.slug).length;
+
+            return (
+              <Link
+                key={skill.slug}
+                to={`/certificates/${skill.slug}`}
+                className="group p-5 rounded-xl border bg-card hover:shadow-md hover:border-primary/20 transition-all duration-300 block"
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-primary/10 text-primary">
+                    {skill.name}
+                  </span>
+                  <span className="text-xs text-muted-foreground font-mono font-medium">
+                    {level}%
+                  </span>
+                </div>
+                <div className="h-1.5 bg-secondary rounded-full overflow-hidden">
+                  <div
+                    className="h-full rounded-full bg-primary transition-all duration-700"
+                    style={{ width: `${level}%` }}
+                  />
+                </div>
+                {certCount > 0 && (
+                  <p className="mt-3 text-xs text-muted-foreground">
+                    {certCount} certificate{certCount !== 1 ? 's' : ''}
+                  </p>
+                )}
+              </Link>
+            );
+          })}
         </div>
       </div>
     </section>

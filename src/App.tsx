@@ -15,6 +15,7 @@ function App() {
         </Route>
         <Route path="/resume" element={<ResumePage />} />
         <Route path="/certificates" element={<CertificatesPage />} />
+        <Route path="/certificates/:skill" element={<CertificatesPage />} />
       </Routes>
     </BrowserRouter>
   );
