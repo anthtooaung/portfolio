@@ -1,6 +1,6 @@
 ---
 title: "Get In Touch"
-email: "hello@mrant.dev"
+email: "anthtooaung2792005@gmail.com"
 socials:
   - name: "GitHub"
     url: "https://github.com/anthtooaung"

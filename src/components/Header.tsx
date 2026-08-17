@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useLayoutEffect, useCallback } from 'react
 import { Link } from 'react-router-dom';
 import { House, User, Folder, GearSix, PaperPlaneRight, List, X, Trophy, Certificate, FileText } from '@phosphor-icons/react';
 import { useScrollSpy } from '@/hooks/useScrollSpy';
+import { AudioGuide } from '@/components/AudioGuide';
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -138,24 +139,17 @@ export function Header() {
                   Resume
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <a
-                  href="#skills"
-                  onClick={(e) => { e.preventDefault(); handleNavClick('#skills'); }}
-                  className="flex items-center gap-2 cursor-pointer"
-                >
-                  <GearSix weight="bold" className="size-3.5" />
-                  Skills
-                </a>
-              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
 
           <div className="w-px h-4 bg-border mx-1" />
+
+          <AudioGuide src="/audio/intro-guide.mp3" />
         </nav>
 
         {/* Mobile controls */}
         <div className="flex md:hidden items-center gap-1">
+          <AudioGuide src="/audio/intro-guide.mp3" />
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="p-1.5 text-muted-foreground hover:text-foreground hover:bg-muted rounded-md transition-colors"
