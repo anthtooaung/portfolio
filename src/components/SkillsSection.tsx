@@ -1,20 +1,26 @@
 import { Link } from 'react-router-dom';
 import { Lightbulb } from '@phosphor-icons/react';
 import { getSkills, getSkillLevel, getCertificatesBySkill } from '@/lib/certs';
+import { getSection } from '@/lib/markdown';
 
 export function SkillsSection() {
   const skills = getSkills();
+  const section = getSection('home/skills.md');
+  const title = (section?.meta?.title as string) ?? 'Skills & Technologies';
+  const intro = (section?.content as string) ?? '';
 
   return (
     <section id="skills" className="py-20 md:py-28 bg-muted/30 scroll-mt-14">
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex items-center gap-2 mb-2">
           <Lightbulb weight="bold" className="size-5 text-primary" />
-          <h2 className="text-3xl font-bold tracking-tight">Skills & Technologies</h2>
+          <h2 className="text-3xl font-bold tracking-tight">{title}</h2>
         </div>
-        <p className="text-muted-foreground mb-10 max-w-lg">
-          Tools and technologies I use to build modern web experiences.
-        </p>
+        {intro && (
+          <p className="text-muted-foreground mb-10 max-w-lg">
+            {intro}
+          </p>
+        )}
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           {skills.map((skill) => {

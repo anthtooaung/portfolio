@@ -1,7 +1,7 @@
-<!-- refreshed: 2026-08-01 -->
+<!-- refreshed: 2026-08-18 -->
 # Architecture
 
-**Analysis Date:** 2026-08-01
+**Analysis Date:** 2026-08-18
 
 ## System Overview
 
@@ -14,8 +14,8 @@
                        ▼
 ┌─────────────────────────────────────────────────────────────┐
 │                    Layout Shell                              │
-│  Header (fixed nav, scroll spy, dark mode toggle)          │
-│  <Routes>                                                   │
+│  DefaultLayout: Header (fixed nav, scroll spy)              │
+│  <Outlet /> → page content                                  │
 │  Footer (social links)                                      │
 │  BrowserRouter wraps entire shell                           │
 └──────────────────────┬──────────────────────────────────────┘
@@ -23,7 +23,10 @@
                        ▼
 ┌─────────────────────────────────────────────────────────────┐
 │                    Page Layer                                │
-│  src/pages/Home.tsx — single route, composes all sections   │
+│  / → Home.tsx (scrollable sections)                         │
+│  /resume → Resume.tsx                                       │
+│  /certificates → Certificates.tsx                           │
+│  /certificates/:skill → Certificates.tsx                    │
 ├─────────┬──────────┬─────────────┬──────────┬───────────────┤
 │  Hero   │  About   │  Projects   │  Skills  │  Contact      │
 │  Section│  Section │  Featured   │  Section │  Section      │
@@ -34,8 +37,10 @@
 ┌─────────────────────────────────────────────────────────────┐
 │              Content / Data Layer                            │
 │  src/content/  (markdown + YAML frontmatter)                │
+│  src/content/certificates.json  (skill/cert structured data)│
 │  src/lib/markdown.ts (parseFrontmatter, getSection,         │
 │                       getProjects)                           │
+│  src/lib/certs.ts (getSkills, getSkillLevel, etc.)          │
 └──────────────────────┬──────────────────────────────────────┘
                        │
 ┌──────────────────────┴──────────────────────────────────────┐
@@ -50,15 +55,18 @@
 | Component | Responsibility | File |
 |-----------|----------------|------|
 | `App` | Root layout, routing, shell composition | `src/App.tsx` |
-| `Header` | Fixed navbar, scroll spy, dark mode toggle, mobile menu | `src/components/Header.tsx` |
+| `DefaultLayout` | Layout wrapper with Header/Footer and `<Outlet>` | `src/components/DefaultLayout.tsx` |
+| `Header` | Fixed navbar, scroll spy, achievements dropdown, mobile menu | `src/components/Header.tsx` |
 | `Footer` | Social links, copyright | `src/components/Footer.tsx` |
 | `Home` | Page composer — orders all section components | `src/pages/Home.tsx` |
 | `HeroSection` | Hero with title, subtitle, CTA, profile photo, status pill | `src/components/HeroSection.tsx` |
 | `AboutSection` | Bio text + info cards rendered from markdown frontmatter | `src/components/AboutSection.tsx` |
 | `FeaturedProjects` | Grid of project cards filtered by `featured: true` | `src/components/FeaturedProjects.tsx` |
 | `ProjectCard` | Single project display (image, tags, description, links) | `src/components/ProjectCard.tsx` |
-| `SkillsSection` | Skill bars rendered from markdown frontmatter | `src/components/SkillsSection.tsx` |
-| `CertificatesSection` | Badge-style certificate icons linking to PDFs | `src/components/CertificatesSection.tsx` |
+| `SkillsSection` | Skill bars rendered from certificates.json via certs.ts | `src/components/SkillsSection.tsx` |
+| `CertificatesPage` | Standalone certificates page with PDF viewer modal | `src/pages/Certificates.tsx` |
+| `ResumePage` | Standalone resume page with markdown content + PDF viewer | `src/pages/Resume.tsx` |
+| `PdfViewer` | Reusable modal PDF preview + download | `src/components/PdfViewer.tsx` |
 | `ContactSection` | Contact form (react-hook-form + Zod + EmailJS) + info | `src/components/ContactSection.tsx` |
 | `Button` | CVA variant-based button with Radix Slot `asChild` | `src/components/ui/button.tsx` |
 | `Input` | Styled input component | `src/components/ui/input.tsx` |
@@ -70,10 +78,11 @@
 
 **Key Characteristics:**
 - Content is authored in markdown files with YAML frontmatter, imported as raw strings at build time via Vite `?raw` suffix
+- Certificate/skill data lives in `certificates.json`, consumed via `src/lib/certs.ts`
 - A custom browser-safe YAML parser (`parseYamlSimple`) extracts metadata from frontmatter — no Node.js or external YAML library
 - Components fetch their own data via `getSection()` or `getProjects()` calls (no central store, no data fetching library in use)
-- Routing is present (`react-router-dom`) but only a single route (`/`) exists — the app functions as a single scrolling page
-- Dark mode via class strategy (`document.documentElement.classList.add('dark')`) with localStorage persistence
+- Routing via `react-router-dom` with 4 routes: `/`, `/resume`, `/certificates`, `/certificates/:skill` — all nested under `DefaultLayout`
+- Dark-only theme — no toggle, no light mode
 
 ## Layers
 
@@ -86,31 +95,32 @@
 
 **Layout Shell:**
 - Purpose: Provide persistent UI (header, footer) around page content
-- Location: `src/App.tsx`
-- Contains: BrowserRouter, Header, Footer, Routes
-- Depends on: Header, Footer, Home
-- Used by: main.tsx
+- Location: `src/components/DefaultLayout.tsx`
+- Contains: Header, `<Outlet>` (react-router-dom), Footer
+- Depends on: Header, Footer
+- Used by: App.tsx (route wrapper)
 
 **Page Layer:**
-- Purpose: Compose sections into a complete page
-- Location: `src/pages/Home.tsx`
-- Contains: Imports and renders all section components in order
-- Depends on: All section components
+- Purpose: Compose sections into a complete page or standalone view
+- Location: `src/pages/Home.tsx`, `src/pages/Resume.tsx`, `src/pages/Certificates.tsx`
+- Home: Imports and renders all section components in order
+- Resume: Markdown content + PdfViewer for resume PDF
+- Certificates: Grid of certificates with PdfViewer modal
 - Used by: App.tsx (routed)
 
 **Section Components:**
-- Purpose: Render individual page sections (Hero, About, Projects, Skills, Certificates, Contact)
-- Location: `src/components/HeroSection.tsx`, `src/components/AboutSection.tsx`, `src/components/FeaturedProjects.tsx`, `src/components/SkillsSection.tsx`, `src/components/CertificatesSection.tsx`, `src/components/ContactSection.tsx`
+- Purpose: Render individual page sections (Hero, About, Projects, Skills, Contact)
+- Location: `src/components/HeroSection.tsx`, `src/components/AboutSection.tsx`, `src/components/FeaturedProjects.tsx`, `src/components/SkillsSection.tsx`, `src/components/ContactSection.tsx`
 - Contains: Section layout, data consumption from markdown, local UI logic
-- Depends on: `src/lib/markdown.ts`, UI primitives, Phosphor Icons
+- Depends on: `src/lib/markdown.ts`, `src/lib/certs.ts`, UI primitives, Phosphor Icons
 - Used by: `src/pages/Home.tsx`
 
 **Content Layer:**
-- Purpose: Author and store markdown content with structured metadata
-- Location: `src/content/home/`, `src/content/projects/`
-- Contains: `.md` files with YAML frontmatter
+- Purpose: Author and store markdown content with structured metadata, plus JSON for skill/cert data
+- Location: `src/content/home/`, `src/content/projects/`, `src/content/certificates.json`
+- Contains: `.md` files with YAML frontmatter, JSON certificate database
 - Depends on: Nothing (static data)
-- Used by: `src/lib/markdown.ts` (imported as raw strings)
+- Used by: `src/lib/markdown.ts` (imported as raw strings), `src/lib/certs.ts` (JSON import)
 
 **Content Parsing Library:**
 - Purpose: Parse raw markdown into structured data accessible by components
@@ -161,11 +171,7 @@
 
 ### Dark Mode Toggle
 
-1. Header reads initial state from `localStorage('theme')` or `prefers-color-scheme` media query (`src/components/Header.tsx:23-28`)
-2. Toggle flips `dark` state (`src/components/Header.tsx:132`)
-3. `useEffect` adds/removes `.dark` class on `document.documentElement` (`src/components/Header.tsx:31-38`)
-4. CSS `.dark { ... }` rules in `src/index.css:89-121` apply the dark palette
-5. State is persisted to `localStorage('theme')` (`src/components/Header.tsx:38`)
+> **Note:** Dark mode toggle has been removed. The site is dark-only.
 
 ### Scroll Spy Navigation
 
@@ -176,7 +182,6 @@
 
 **State Management:**
 - Component-local `useState` only — no Zustand, no TanStack React Query usage yet
-- Theme state: `useState` + `localStorage` in Header
 - Form state: react-hook-form (ContactSection)
 - Navigation state: `useScrollSpy` hook (Header)
 - Mobile menu state: `useState` in Header
@@ -217,27 +222,15 @@
 
 ## Architectural Constraints
 
-- **Single Route:** Only `/` exists. All "pages" are sections on the same scrollable page. Adding routes requires creating files in `src/pages/` and registering them in `src/App.tsx:12`.
+- **Multi-Route:** 4 routes exist (`/`, `/resume`, `/certificates`, `/certificates/:skill`), all nested under `DefaultLayout` in `src/App.tsx`.
 - **No Server-Side Rendering:** Pure client-side SPA. Content is bundled at build time via Vite raw imports.
 - **Build-Time Content:** Content changes require a rebuild. Markdown files cannot be updated at runtime.
-- **Manual Module Registration:** New markdown content files must be manually imported and added to the `modules` record in `src/lib/markdown.ts:22-29`. The comment notes `import.meta.glob` is not supported with the current Vite/Rolldown configuration.
+- **Manual Module Registration:** New markdown content files must be manually imported and added to the `modules` record in `src/lib/markdown.ts`. The comment notes `import.meta.glob` is not supported with the current Vite/Rolldown configuration.
 - **No Global State Store:** Zustand is installed but unused. All state is local to components.
 - **No Data Fetching Layer:** TanStack React Query is installed but unused. No API calls except the EmailJS send.
-- **Inline `<style>` Tags:** `CertificatesSection` uses an inline `<style>` tag for custom CSS rather than Tailwind utilities or the global stylesheet (`src/components/CertificatesSection.tsx:43-63`).
+- **Dark-Only Theme:** No light mode, no theme toggle. CSS variables define a single dark palette.
 
 ## Anti-Patterns
-
-### Inline `<style>` Tags in Components
-
-**What happens:** `CertificatesSection` injects CSS via `<style>{...}</style>` for `.cert-ico-link` and `.cert-ico` classes (`src/components/CertificatesSection.tsx:43-63`).
-**Why it's wrong:** Bypasses the Tailwind utility system, creates global class name pollution, and these styles are not scoped to the component.
-**Do this instead:** Use Tailwind utility classes directly on elements, or add custom utilities to `src/index.css` under `@layer utilities`.
-
-### Hardcoded Certificate Data
-
-**What happens:** Certificate filenames are hardcoded in a `CERTS` array inside `src/components/CertificatesSection.tsx:3-10`.
-**Why it's wrong:** Adding or removing certificates requires editing component source code. The pattern is inconsistent with the markdown-driven content approach used elsewhere.
-**Do this instead:** Move certificate data into a markdown file (e.g., `src/content/home/certificates.md`) and consume it via `getSection()`, matching the pattern used by Hero, About, Skills, and Contact.
 
 ### Manual Module Registration in markdown.ts
 
@@ -267,4 +260,4 @@
 
 ---
 
-*Architecture analysis: 2026-08-01*
+*Architecture analysis: 2026-08-18*

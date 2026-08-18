@@ -152,3 +152,16 @@
     @apply font-sans scroll-smooth;
   }
 }
+
+@media print {
+  header, footer, .no-print {
+    display: none !important;
+  }
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  a {
+    text-decoration: underline !important;
+  }
+}

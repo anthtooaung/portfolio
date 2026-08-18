@@ -106,7 +106,7 @@ portfolio-app/
 - [x] Add modal/dialog wrapper for certificate preview
 - [x] Add download button in PDF viewer modal
 - [x] Integrate with `CertificatesCarousel.tsx`
-- [ ] Create PDF viewer for Resume page
+- [x] Create PDF viewer for Resume page
 
 **Component API:**
 ```tsx
@@ -124,13 +124,13 @@ portfolio-app/
 **Goal:** Add a toggleable voice guide audio player for site introduction.
 
 **Tasks:**
-- [ ] Create `public/audio/intro-guide.mp3` placeholder
-- [ ] Create `src/components/AudioGuide.tsx` component
-- [ ] Add play/pause button with icon
-- [ ] Add global toggle in Header component
-- [ ] Persist audio preference in `localStorage`
-- [ ] Implement autoplay on first visit (optional)
-- [ ] Add `aria-label` for accessibility
+- [x] Create `public/audio/intro-guide.mp3` placeholder
+- [x] Create `src/components/AudioGuide.tsx` component
+- [x] Add play/pause button with icon
+- [x] Add global toggle in Header component
+- [x] Persist audio preference in `localStorage`
+- [x] Implement autoplay on first visit (optional)
+- [x] Add `aria-label` for accessibility
 
 **Component API:**
 ```tsx
@@ -148,14 +148,14 @@ portfolio-app/
 **Goal:** Add "Achievements" dropdown menu to navigation header.
 
 **Tasks:**
-- [ ] Add `DropdownMenu` component from shadcn/ui
-- [ ] Create "Achievements" dropdown with links:
+- [x] Add `DropdownMenu` component from shadcn/ui
+- [x] Create "Achievements" dropdown with links:
   - Certificates (#certificates)
   - Resume (#resume or /resume)
   - Skills (#skills)
-- [ ] Update `Header.tsx` with dropdown menu
-- [ ] Ensure mobile menu includes dropdown items
-- [ ] Test smooth scroll to achievement sections
+- [x] Update `Header.tsx` with dropdown menu
+- [x] Ensure mobile menu includes dropdown items
+- [x] Test smooth scroll to achievement sections
 
 ---
 
@@ -164,12 +164,12 @@ portfolio-app/
 **Goal:** Create dedicated `/resume` route with markdown content and PDF preview.
 
 **Tasks:**
-- [ ] Create `src/pages/Resume.tsx` page component
-- [ ] Create `src/content/resume.md` with markdown content
-- [ ] Register route in `src/App.tsx`
-- [ ] Add navigation link in `Header.tsx`
-- [ ] Implement PDF viewer for resume download
-- [ ] Add back navigation to home page
+- [x] Create `src/pages/Resume.tsx` page component
+- [x] Create `src/content/resume.md` with markdown content
+- [x] Register route in `src/App.tsx`
+- [x] Add navigation link in `Header.tsx`
+- [x] Implement PDF viewer for resume download
+- [x] Add back navigation to home page
 
 ---
 

@@ -7,12 +7,12 @@ import { ContactSection } from '@/components/ContactSection';
 
 export function Home() {
   return (
-    <main>
+    <>
       <HeroSection />
       <AboutSection />
       <FeaturedProjects />
       <SkillsSection />
       <ContactSection />
-    </main>
+    </>
   );
 }

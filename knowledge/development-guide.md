@@ -2,7 +2,7 @@
 
 ## Prerequisites
 - Node.js (v18 or higher)
-- npm or yarn package manager
+- npm package manager
 - Git
 
 ## Setup
@@ -16,15 +16,11 @@ cd portfolio
 ### 2. Install Dependencies
 ```bash
 npm install
-# or
-yarn install
 ```
 
 ### 3. Start Development Server
 ```bash
 npm run dev
-# or
-yarn dev
 ```
 
 The application will be available at `http://localhost:5173`
@@ -34,69 +30,56 @@ The application will be available at `http://localhost:5173`
 | Command | Description |
 |---------|-------------|
 | `npm run dev` | Start development server |
-| `npm run build` | Build for production |
+| `npm run build` | TypeScript check + production build |
 | `npm run preview` | Preview production build |
 | `npm run lint` | Run ESLint |
-| `npm run format` | Format code with Prettier |
 
 ## Development Workflow
 
 ### Adding a New Project
-1. Open `/src/data/projects.js`
-2. Add a new project object to the array:
-```javascript
-{
-  id: 4,
-  title: "Project Name",
-  description: "Brief description",
-  image: "/images/projects/project4.png",
-  technologies: ["React", "Node.js"],
-  github: "https://github.com/username/repo",
-  live: "https://project-url.com",
-  featured: true
-}
-```
-3. Add project screenshot to `/public/images/projects/`
+1. Create a new markdown file in `src/content/projects/`
+2. Add YAML frontmatter (title, date, description, tags, image, etc.)
+3. Import the file in `src/lib/markdown.ts` and add to the `modules` map
 
-### Adding a New Skill
-1. Open `/src/data/skills.js`
-2. Add skill to appropriate category:
-```javascript
-{
-  name: "Technology",
-  icon: "icon-name",
-  level: "intermediate"
-}
-```
+### Adding a New Skill/Certificate
+1. Edit `src/content/certificates.json`
+2. Add certificate entries with `title`, `skill`, `pdf` path
+3. Skills are auto-derived from certificate data via `src/lib/certs.ts`
 
 ### Creating a New Component
-1. Create file in `/src/components/`
-2. Use PascalCase naming: `NewComponent.jsx`
+1. Create file in `src/components/` (use PascalCase)
+2. Follow shadcn/ui pattern for UI primitives (CVA variants)
 3. Import in parent component
 
 ### Adding a New Page
-1. Create file in `/src/pages/`
-2. Add route in `App.jsx`
+1. Create file in `src/pages/`
+2. Add route in `src/App.tsx` inside the `DefaultLayout` route
+
+### Adding Markdown Content
+1. Create `.md` file with YAML frontmatter in `src/content/`
+2. Import with `?raw` suffix in `src/lib/markdown.ts`
+3. Add to the `modules` record with key `./content/<path>`
+4. Call `getSection('<path>')` from your component
 
 ## Code Style Guidelines
 
-### JavaScript/JSX
+### TypeScript/React
 - Use functional components with hooks
+- Use TypeScript for all files
 - Destructure props in function parameters
-- Use meaningful variable names
-- Keep components small and focused
 
 ### CSS/Tailwind
 - Use Tailwind utility classes
 - Mobile-first responsive design
-- Use custom CSS only when necessary
+- OKLCH design tokens defined in `index.css`
+- Dark-only theme (no light mode toggle)
 
 ## Git Workflow
 
 ### Branch Naming
 - `feature/feature-name` - New features
 - `fix/bug-description` - Bug fixes
-- `update/update-description` - Updates to existing code
+- `update/update-description` - Updates
 
 ### Commit Messages
 Use conventional commits:
@@ -119,21 +102,14 @@ The portfolio can be deployed to:
 
 ## Troubleshooting
 
-### Common Issues
-
-**Port already in use:**
+### Port already in use
 ```bash
 npx kill-port 5173
 npm run dev
 ```
 
-**Dependencies not installing:**
+### Dependencies not installing
 ```bash
 rm -rf node_modules package-lock.json
 npm install
 ```
-
-**Build errors:**
-- Check for syntax errors
-- Verify all imports are correct
-- Ensure all dependencies are installed

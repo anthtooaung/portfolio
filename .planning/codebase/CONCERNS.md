@@ -1,38 +1,20 @@
 # Codebase Concerns
 
-**Analysis Date:** 2026-08-01
+**Analysis Date:** 2026-08-18
 
 ## Tech Debt
 
 **Unused Dependencies:**
-- Issue: `zustand`, `@tanstack/react-query`, and `lucide-react` are installed in `package.json` but never imported anywhere in source code. They add to `node_modules` weight and could confuse future contributors.
-- Files: `package.json` (lines 19, 33)
-- Impact: Increased install size, misleading dependency graph. `lucide-react` coexists with `@phosphor-icons/react` which is the actual icon library in use.
-- Fix approach: Remove unused packages from `package.json`: `npm uninstall zustand @tanstack/react-query lucide-react`. Verify no CSS imports reference them (they don't).
-
-**Stale Knowledge Documents:**
-- Issue: `knowledge/project-structure.md` describes an entirely different architecture (JSX files, `src/data/`, `src/styles/`, `src/context/`, `src/utils/`) that no longer exists. `knowledge/development-guide.md` references `npm run format` (not in `package.json`), and file paths like `src/data/projects.js` and `src/data/skills.js` that don't exist.
-- Files: `knowledge/project-structure.md`, `knowledge/development-guide.md`
-- Impact: Misleads developers and AI agents into expecting directories/files that don't exist, leading to wrong file placement.
-- Fix approach: Rewrite both documents to match current architecture: TypeScript, markdown-driven content in `src/content/`, components in `src/components/`, no `src/data/` or `src/styles/`.
-
-**Hardcoded Certificate Data:**
-- Issue: `CertificatesSection.tsx` contains a hardcoded `CERTS` array mapping certificate names to PDF filenames. Any new certificate requires editing the component source.
-- Files: `src/components/CertificatesSection.tsx` (lines 3-10)
-- Impact: Every certificate addition is a code change rather than a content change, breaking the markdown-driven content pattern used elsewhere.
-- Fix approach: Migrate certificate metadata to a markdown file (e.g., `src/content/home/certificates.md`) with frontmatter, similar to how skills/about/hero work.
+- Issue: `lucide-react` is installed in `package.json` but never imported anywhere in source code. It coexists with `@phosphor-icons/react` which is the actual icon library in use.
+- Files: `package.json`
+- Impact: Misleading dependency graph. `lucide-react` adds dead weight.
+- Fix approach: `npm uninstall lucide-react`. (`zustand` and `@tanstack/react-query` already removed.)
 
 **Manual Module Registration for Markdown:**
-- Issue: `src/lib/markdown.ts` requires manually importing each `.md` file and adding it to the `modules` map (lines 15-29). Adding a new content file requires two edits: an import statement and a map entry.
-- Files: `src/lib/markdown.ts` (lines 15-29)
+- Issue: `src/lib/markdown.ts` requires manually importing each `.md` file and adding it to the `modules` map. Adding a new content file requires two edits: an import statement and a map entry.
+- Files: `src/lib/markdown.ts`
 - Impact: Friction for content updates; a forgotten registration silently produces a 404-like `null` return.
 - Fix approach: Consider `import.meta.glob` (may need Vite plugin support for .md) or a build-time codegen step.
-
-**Inline CSS in CertificatesSection:**
-- Issue: `CertificatesSection.tsx` injects raw CSS via a `<style>` tag (lines 43-63) with hardcoded class names (`.cert-ico-link`, `.cert-ico`). This bypasses Tailwind's utility system and the project's design token approach.
-- Files: `src/components/CertificatesSection.tsx` (lines 43-63)
-- Impact: Styles are not tree-shaken, not composable with Tailwind, and create global class name conflicts if duplicated.
-- Fix approach: Convert to Tailwind utility classes and `@layer utilities` custom classes in `index.css`, or use the existing `animate-fade-up` pattern with Tailwind hover variants.
 
 ## Known Bugs
 
@@ -183,4 +165,4 @@
 
 ---
 
-*Concerns audit: 2026-08-01*
+*Concerns audit: 2026-08-18*

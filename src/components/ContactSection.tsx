@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import emailjs from '@emailjs/browser';
@@ -27,6 +27,13 @@ type SubmitStatus = 'idle' | 'submitting' | 'success' | 'error';
 export function ContactSection() {
   const contactData = getSection('home/contact.md');
   const [submitStatus, setSubmitStatus] = useState<SubmitStatus>('idle');
+  const resetTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (resetTimerRef.current) clearTimeout(resetTimerRef.current);
+    };
+  }, []);
 
   const {
     register,
@@ -72,7 +79,7 @@ export function ContactSection() {
       reset();
 
       // Reset success message after 5 seconds
-      setTimeout(() => setSubmitStatus('idle'), 5000);
+      resetTimerRef.current = setTimeout(() => setSubmitStatus('idle'), 5000);
     } catch (error) {
       console.error('Failed to send email:', error);
       setSubmitStatus('error');

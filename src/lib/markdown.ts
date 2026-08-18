@@ -134,20 +134,30 @@ export function parseFrontmatter(raw: string): MarkdownFile {
 
 /**
  * Get a singleton section by its content path (e.g., 'home/hero.md').
- * Returns null if the file doesn't exist.
+ * Returns null if the file doesn't * @param path
+ * @returns
+ * exist. Results are cached after first parse.
  */
+const sectionCache = new Map<string, MarkdownFile | null>();
+
 export function getSection(path: string): MarkdownFile | null {
+  if (sectionCache.has(path)) return sectionCache.get(path)!;
   const key = `./content/${path}`;
   const raw = modules[key];
-  if (!raw) return null;
-  return parseFrontmatter(raw as string);
+  const result = raw ? parseFrontmatter(raw as string) : null;
+  sectionCache.set(path, result);
+  return result;
 }
 
 /**
  * Get all project files from src/content/projects/.
- * Returns an array sorted by date (newest first).
+ * Returns an array sorted by date (newest first). Results are cached.
  */
+let projectsCache: ProjectFile[] | null = null;
+
 export function getProjects(): ProjectFile[] {
+  if (projectsCache) return projectsCache;
+
   const projects: ProjectFile[] = [];
 
   for (const [key, raw] of Object.entries(modules)) {
@@ -159,9 +169,10 @@ export function getProjects(): ProjectFile[] {
   }
 
   // Sort by date, newest first
-  return projects.sort((a, b) => {
+  projectsCache = projects.sort((a, b) => {
     const dateA = new Date(String(a.meta.date || 0));
     const dateB = new Date(String(b.meta.date || 0));
     return dateB.getTime() - dateA.getTime();
   });
+  return projectsCache;
 }

@@ -1,18 +1,17 @@
+import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Download, ArrowSquareOut, Trophy } from '@phosphor-icons/react';
 import { Button } from '@/components/ui/button';
+import { PdfViewer } from '@/components/PdfViewer';
 import { getCertificates, getSkills, getCertificatesBySkill, type Certificate } from '@/lib/certs';
 
 export function CertificatesPage() {
   const { skill } = useParams<{ skill: string }>();
+  const [viewerCert, setViewerCert] = useState<Certificate | null>(null);
 
   const skills = getSkills();
   const activeSkill = skill ? skills.find((s) => s.slug === skill) : null;
   const certs = skill ? getCertificatesBySkill(skill) : getCertificates();
-
-  const handleOpen = (cert: Certificate) => {
-    window.open(cert.pdf, '_blank', 'noopener,noreferrer');
-  };
 
   const handleDownload = (cert: Certificate) => {
     const link = document.createElement('a');
@@ -93,13 +92,13 @@ export function CertificatesPage() {
                 {/* PDF Preview */}
                 <div
                   className="w-full aspect-[4/3] rounded-lg overflow-hidden border border-border bg-muted cursor-pointer mb-3"
-                  onClick={() => handleOpen(cert)}
+                  onClick={() => setViewerCert(cert)}
                   role="button"
                   tabIndex={0}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       e.preventDefault();
-                      handleOpen(cert);
+                      setViewerCert(cert);
                     }
                   }}
                 >
@@ -125,7 +124,7 @@ export function CertificatesPage() {
                     variant="outline"
                     size="sm"
                     className="flex-1"
-                    onClick={() => handleOpen(cert)}
+                    onClick={() => setViewerCert(cert)}
                   >
                     <ArrowSquareOut weight="bold" className="size-3.5 mr-1" />
                     Open
@@ -149,6 +148,14 @@ export function CertificatesPage() {
           {certs.length} certificate{certs.length !== 1 ? 's' : ''} total
         </p>
       </div>
+
+      {/* PDF Viewer Modal */}
+      <PdfViewer
+        src={viewerCert?.pdf ?? ''}
+        title={viewerCert?.title ?? ''}
+        open={viewerCert !== null}
+        onOpenChange={(open) => { if (!open) setViewerCert(null); }}
+      />
     </div>
   );
 }

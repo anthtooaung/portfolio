@@ -13,7 +13,6 @@ The site must feel like **mine** — not a template. Warmer colors, real content
 ### Validated
 
 - ✓ Single-page scrolling portfolio (Hero, About, Projects, Skills, Certificates, Contact) — existing
-- ✓ Dark mode toggle with localStorage persistence — existing
 - ✓ Markdown-driven content system (frontmatter + raw imports) — existing
 - ✓ Contact form with react-hook-form + Zod + EmailJS — existing
 - ✓ Scroll-spy navigation with active section highlighting — existing
@@ -22,9 +21,6 @@ The site must feel like **mine** — not a template. Warmer colors, real content
 
 ### Active
 
-- [ ] Light theme redesign: warmer tones (cream/beige background, softer contrast)
-- [ ] Hero section: 3D tilt/shake motion effect on profile image
-- [ ] Resume/CV page at `/resume` — styled web page + print stylesheet for PDF download
 - [ ] Populate all sections with real content (user-provided: bio, projects, skills, certificates)
 - [ ] Polish overall feel: refine spacing, typography, transitions across all sections
 
@@ -44,12 +40,12 @@ The site must feel like **mine** — not a template. Warmer colors, real content
 - shadcn/ui (radix-lyra style) with Phosphor Icons
 - Markdown content in `src/content/` parsed by custom `parseYamlSimple` in `src/lib/markdown.ts`
 - Components in `src/components/`, pages in `src/pages/`
-- Dark mode via `.dark` class strategy on `<html>`
-- Single route (`/`) via react-router-dom — BrowserRouter wraps the shell
+- Dark-only theme (no toggle)
+- Routes: `/`, `/resume`, `/certificates`, `/certificates/:skill` via react-router-dom — all nested under `DefaultLayout`
 
 **Known issues to be aware of:**
 - Custom YAML parser (`parseYamlSimple`) has no test coverage, limited to flat key-value and simple arrays
-- Certificate data hardcoded in `CertificatesSection.tsx` — not yet migrated to markdown
+- Certificate data driven by `src/content/certificates.json` + `src/lib/certs.ts`
 - Markdown parsing runs on every render with no memoization
 - No error boundaries, no 404 page, no SEO meta tags
 - Unused dependencies: zustand, @tanstack/react-query, lucide-react
@@ -73,8 +69,7 @@ The site must feel like **mine** — not a template. Warmer colors, real content
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Warmer light theme palette | Current light theme is too bright/sterile; needs cream/beige tones | — Pending |
-| 3D tilt/shake hero image | User wants distinctive, animated profile image treatment | — Pending |
+| Dark-only theme | Simplifies implementation, no toggle needed | Shipped |
 | Print stylesheet for PDF resume | Zero-dependency approach, matches web page exactly, user CTRL+P to save | — Pending |
 | Skip blog for now | Low friction to add later via markdown architecture; focus on polish first | — Pending |
 | User provides real data | Replace placeholder content with actual projects, skills, bio | — Pending |
