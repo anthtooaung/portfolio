@@ -25,7 +25,7 @@ export function CertificatesPage() {
 
   return (
     <div className="min-h-screen bg-background py-20 md:py-28">
-      <div className="max-w-4xl mx-auto px-4">
+      <div className="max-w-6xl mx-auto px-4">
         {/* Back link */}
         <Link
           to="/"
@@ -78,29 +78,31 @@ export function CertificatesPage() {
           ))}
         </div>
 
-        {/* Certificate list */}
+        {/* Certificate grid */}
         {certs.length === 0 ? (
           <div className="text-center py-16 text-muted-foreground text-sm">
             No certificates found for this skill.
           </div>
         ) : (
-          <div className="space-y-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
             {certs.map((cert) => (
               <div
                 key={cert.id}
-                className="group rounded-xl border bg-card p-4 sm:p-5 flex flex-col sm:flex-row items-stretch gap-4 hover:border-primary/30 hover:bg-card/80 transition-all duration-200 cursor-pointer"
-                onClick={() => handleOpen(cert)}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    handleOpen(cert);
-                  }
-                }}
+                className="group rounded-xl border bg-card p-3 flex flex-col hover:border-primary/30 hover:bg-card/80 transition-all duration-200"
               >
                 {/* PDF Preview */}
-                <div className="shrink-0 w-full sm:w-40 h-32 sm:h-28 rounded-lg overflow-hidden border border-border bg-muted">
+                <div
+                  className="w-full aspect-[4/3] rounded-lg overflow-hidden border border-border bg-muted cursor-pointer mb-3"
+                  onClick={() => handleOpen(cert)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      handleOpen(cert);
+                    }
+                  }}
+                >
                   <object
                     data={cert.pdf}
                     type="application/pdf"
@@ -114,33 +116,28 @@ export function CertificatesPage() {
                   </object>
                 </div>
 
-                {/* Info + actions */}
-                <div className="flex-1 min-w-0 flex flex-col justify-between">
-                  <div>
-                    <h2 className="text-sm font-semibold truncate">{cert.title}</h2>
-                    {cert.issuedDate && (
-                      <p className="text-xs text-muted-foreground mt-1 font-mono">
-                        Issued: {new Date(cert.issuedDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
-                      </p>
-                    )}
-                  </div>
-                  <div className="flex items-center gap-2 mt-3" onClick={(e) => e.stopPropagation()}>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => handleOpen(cert)}
-                    >
-                      <ArrowSquareOut weight="bold" className="size-3.5 mr-1.5" />
-                      Open
-                    </Button>
-                    <Button
-                      size="sm"
-                      onClick={() => handleDownload(cert)}
-                    >
-                      <Download weight="bold" className="size-3.5 mr-1.5" />
-                      Download
-                    </Button>
-                  </div>
+                {/* Certificate name */}
+                <h2 className="text-sm font-semibold truncate mb-3">{cert.title}</h2>
+
+                {/* Action buttons */}
+                <div className="flex items-center gap-2 mt-auto">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="flex-1"
+                    onClick={() => handleOpen(cert)}
+                  >
+                    <ArrowSquareOut weight="bold" className="size-3.5 mr-1" />
+                    Open
+                  </Button>
+                  <Button
+                    size="sm"
+                    className="flex-1"
+                    onClick={() => handleDownload(cert)}
+                  >
+                    <Download weight="bold" className="size-3.5 mr-1" />
+                    Download
+                  </Button>
                 </div>
               </div>
             ))}
