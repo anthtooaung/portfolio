@@ -1,12 +1,12 @@
 import { getSection } from '@/lib/markdown';
 import { ArrowDown } from '@phosphor-icons/react';
 import { Button } from '@/components/ui/button';
+import { TypingAnimation } from '@/components/TypingAnimation';
 
 export function HeroSection() {
   const hero = getSection('home/hero.md');
   if (!hero) return null;
 
-  const title = String(hero.meta.title || 'Hello');
   const subtitle = hero.meta.subtitle ? String(hero.meta.subtitle) : null;
   const cta = hero.meta.cta ? String(hero.meta.cta) : null;
   const ctaLink = hero.meta.ctaLink ? String(hero.meta.ctaLink) : null;
@@ -25,10 +25,15 @@ export function HeroSection() {
             available for work
           </div>
 
-          {/* Title with gradient + blinking cursor */}
+          {/* Title with typing animation */}
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 leading-[1.05] animate-fade-up animation-delay-100">
-            <span className="text-gradient-warm">{title}</span>
-            <span className="text-primary animate-cursor-blink font-mono">_</span>
+            <TypingAnimation
+              words={['Ant Htoo Aung', 'Mr.Ant']}
+              typingSpeed={100}
+              deletingSpeed={60}
+              pauseDuration={2000}
+              className="text-gradient-warm"
+            />
           </h1>
 
           {subtitle && (
@@ -53,7 +58,7 @@ export function HeroSection() {
           <div className="shrink-0 animate-fade-up animation-delay-200">
             <img
               src="/profile.jpg"
-              alt="Ant Htoo Aung"
+              alt="Mr.Ant"
               className="w-40 h-40 md:w-56 md:h-56 rounded-full object-cover ring-4 ring-primary/20 shadow-lg"
             />
           </div>
